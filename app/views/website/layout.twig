@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-br" class="pre-loading {{ responsive ? 'responsive' : null }}">
+<head>
+
+    {{ seo_header() }}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/bootstrap4.css"/>
+    <link rel="stylesheet" href="css/site.css?v=2.0.0"/>
+    <link rel="stylesheet" href="css/bonanza-theme.css?v=2.0.1"/>
+    <link rel="stylesheet" href="css/loading.css"/>
+
+    {{ dados.getHtmlHead()|raw }}
+    {% include 'website/inc/personalizacao-css.twig' %}
+
+</head>
+<body>
+
+<div id="website" {% if pageAposta %}v-cloak{% endif %}>
+
+    {% include 'website/inc/header.twig' %}
+
+    <div class="bonanza-content-wrapper">
+        <main class="app-main">
+            {% block main %}{% endblock %}
+        </main>
+    </div>
+
+    <footer class="bonanza-footer">
+        <div class="container-fluid px-lg-4 px-3">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-12 col-md-auto text-center text-md-left mb-2 mb-md-0">
+                    ©{{ 'now'|date('Y') }} {{ dados.getBanca() }}. Todos os direitos reservados.
+                </div>
+                <div class="col-12 col-md-auto text-center text-md-right">
+                    <ul class="justify-content-center justify-content-md-end">
+                        {% if dados.getExibirRegras() %}<li><a href="{{ url('regras') }}"><i class="fa fa-book mr-1"></i> Regulamento</a></li>{% endif %}
+                        {% if dados.getExibirCotacoes() %}<li><a href="{{ url('cotacoes') }}"><i class="fa fa-line-chart mr-1"></i> Cotações</a></li>{% endif %}
+                        {% if dados.getExibirComunicados() %}<li><a href="{{ url('comunicados') }}"><i class="fa fa-bullhorn mr-1"></i> Comunicados</a></li>{% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+{{ seo_footer() }}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="node_modules/owl.carousel2/dist/owl.carousel.js"></script>
+<script type="text/javascript" src="node_modules/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="cdn/js/clipboard.min.js"></script>
+<script type="text/javascript" src="cdn/js/jquery.form.js"></script>
+<script type="text/javascript" src="cdn/js/jquery.serializeObject.js"></script>
+<script type="text/javascript" src="cdn/js/modernizr.min.js"></script>
+<script type="text/javascript" src="cdn/js/jquery.mask.js"></script>
+<script type="text/javascript" src="cdn/js/mask.js"></script>
+<script type="text/javascript" src="cdn/js/fastclick.js"></script>
+<script type="text/javascript" src="cdn/js/admin.js?v=1.0.0"></script>
+<script type="text/javascript" src="cdn/js/string.js"></script>
+<script type="text/javascript" src="js/site.js?v=1.0.0"></script>
+
+{% include 'website/modals/login.twig' %}
+
+{{ dados.getHtmlFooter()|raw }}
+
+{% block script %}{% endblock %}
+
+<script>
+    if ($('.carousel').length) {
+        $('.carousel').carousel();
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,977 @@
+{% extends layout %}
+
+{% set hoje = 'now'|date('Y-m-d') %}
+{% set amanha = '+1day'|date('Y-m-d') %}
+{% set selector = '#website' %}
+
+{% block bilhete %}
+    <div class="bilhete" v-cloak>
+
+        <header>
+            <h3 class="title">
+                <i class="fa fa-ticket"></i> Cupom de Aposta
+            </h3>
+            <div class="bilhete-close d-block d-lg-none" onclick="$('.bilhete').removeClass('show');" title="Fechar Cupom">
+                <i class="fa fa-times"></i>
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="lista-jogos">
+                <div v-if="aposta.jogos.length < minJogos" class="p-2">
+                    <div class="alert alert-warning m-0 text-center font-weight-bold small">
+                        <i class="fa fa-info-circle mr-1"></i> Mínimo de jogos no bilhete: ${minJogos}
+                    </div>
+                </div>
+
+                <div v-if="aposta.jogos.length == 0" class="text-center py-4 text-muted small">
+                    <i class="fa fa-hand-pointer-o fa-2x mb-2 d-block text-secondary"></i>
+                    Clique nas cotações dos jogos para adicionar ao seu cupom.
+                </div>
+
+                <div v-if="aposta.jogos.length > 0">
+                    <table class="table table-aposta mb-0">
+                        <tbody>
+                        <tr v-for="(v, i) in aposta.jogos" :key="i">
+                            <td>
+                                <div class="item-times">
+                                    ${v.jogo.casa} x ${v.jogo.fora}
+                                </div>
+                                <div class="item-detalhes">
+                                    <span class="mr-1"><i class="fa fa-calendar-o"></i> ${v.jogo.data.split('-').reverse().join('/')} às ${v.jogo.hora.replace(/:00$/, '')}</span>
+                                </div>
+                                <div class="mt-1">
+                                    <span class="item-taxa">
+                                        <b>${v.cotacao.title || v.cotacao.sigla}</b>: ${(v && v.jogo && v.jogo.cotacoes && v.jogo.cotacoes[v.tempo] && v.cotacao && v.jogo.cotacoes[v.tempo][v.cotacao.campo]) ? maskReal(v.jogo.cotacoes[v.tempo][v.cotacao.campo]) : '-'}
+                                    </span>
+                                    <span class="badge badge-secondary ml-1" v-if="v.tempo != '90'">
+                                        ${v.tempo == 'pt' ? '1º Tempo': '2º Tempo'}
+                                    </span>
+                                </div>
+                            </td>
+                            <td width="30" class="text-right pr-2">
+                                <a href="javascript:;" v-on:click="rmAposta(i)" class="btn btn-sm btn-link text-danger p-0" title="Remover jogo">
+                                    <i class="fa fa-trash-o fa-lg"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <!-- Resumo do Cupom -->
+            <div class="summary-row">
+                <span>Número de Seleções:</span>
+                <span class="font-weight-bold" :class="{'text-danger': aposta.jogos.length < minJogos}">
+                    ${aposta.jogos.length} ${aposta.jogos.length === 1 ? 'jogo' : 'jogos'}
+                </span>
+            </div>
+
+            <div class="summary-row">
+                <span>Cotação Total:</span>
+                <span class="font-weight-bold" :class="getCotacao() < getCotacaoMinima() ? 'text-danger' : 'text-dark'">
+                    ${getCotacao()|maskReal}
+                </span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label class="small font-weight-bold text-muted mb-1">Valor da Aposta (R$):</label>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text font-weight-bold">R$</span>
+                    </div>
+                    <input type="number" v-model="valorAposta" :min="apostaMinima" :max="apostaMaxima" step="1.00"
+                           class="form-control form-control-sm font-weight-bold"
+                           :class="{'is-invalid': valorAposta < apostaMinima || valorAposta > apostaMaxima}"/>
+                </div>
+            </div>
+
+            <div class="summary-row premio-box">
+                <span>Possível Retorno:</span>
+                <span class="premio-val">R$ ${premio}</span>
+            </div>
+
+            <div class="form-group mb-3">
+                <input type="text" v-model="cliente" class="form-control form-control-sm"
+                       placeholder="Nome do cliente (opcional)" maxlength="50"/>
+            </div>
+
+            <div class="row no-gutters" style="gap: 6px;">
+                <div class="col">
+                    <button class="btn btn-block btn-finalizar"
+                            :disabled="!apostaValida"
+                            v-on:click="finalizarAposta">
+                        <i class="fa fa-check-circle mr-1"></i> {{ user ? 'Concluir Aposta' : 'Criar Pré-bilhete' }}
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-limpar" v-on:click="limpaAposta" title="Limpar todas as seleções">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+{% endblock %}
+
+{% block jogos %}
+
+    <div v-if="paises">
+        <div v-for="pais in paises" v-if="filterPais(pais)">
+            <div v-for="campeonato in getCampeonatos(pais, true)" class="table-jogos-container mb-3">
+                
+                <!-- Cabeçalho do Campeonato -->
+                <div class="header-campeonato">
+                    <div class="campeonato-nome">
+                        <img v-if="pais.img" :src="pais.img" style="height: 18px; width: 18px; object-fit: contain; border-radius: 2px;" class="mr-1"/>
+                        <a href="javascript:;" v-on:click="setCampeonato(campeonato)">
+                            ${campeonato.title}
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="cotacoes-labels mr-2">
+                            <span v-for="c in getCotacoesPrincipais()">${c.title}</span>
+                            <span class="mais">+Mais</span>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-link text-white p-0 ml-1" v-on:click="imprimir(campeonato.id)" title="Imprimir jogos deste campeonato">
+                            <i class="fa fa-print"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Lista de Partidas -->
+                <div v-for="jogo in getJogos(campeonato)" class="jogo-row">
+                    <div class="jogo-info-col" v-on:click="maisCotacoes(jogo)">
+                        <div class="times-box">
+                            <span class="time-casa">${jogo.casa}</span>
+                            <span class="versus">x</span>
+                            <span class="time-fora">${jogo.fora}</span>
+                        </div>
+                        <div class="horario-badge">
+                            <i class="fa fa-clock-o"></i>
+                            <span>${jogo.data.split('-').reverse().join('/')} às ${jogo.hora.replace(/:00$/, '')}</span>
+                        </div>
+                    </div>
+
+                    <div class="jogo-odds-col">
+                        <div v-for="c in getCotacoesPrincipais()"
+                             class="btn-cotacao"
+                             :class="{active: jogo.apostaEm == '90' + c.campo}"
+                             :title="c.title + ': ' + maskReal(jogo.cotacoes && jogo.cotacoes['90'] ? jogo.cotacoes['90'][c.campo] : '')"
+                             v-on:click="apostar(jogo, '90', c)">
+                            ${(jogo.cotacoes && jogo.cotacoes['90'] && jogo.cotacoes['90'][c.campo]) ? maskReal(jogo.cotacoes['90'][c.campo]) : '-'}
+                        </div>
+                        
+                        <div class="btn-cotacao outras"
+                             :class="{active: jogo.outras}"
+                             title="Mais mercados e cotações"
+                             v-on:click="maisCotacoes(jogo)">
+                            +${Math.max(0, totalCotacoes(jogo.cotacoes) - getCotacoesPrincipais().length)}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{ block('modalCotacoes') }}
+
+{% endblock %}
+
+{% block modalCotacoes %}
+    <div id="modal-cotacoes" class="modal fade" tabindex="-1" role="dialog" v-cloak>
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content shadow-lg border-0" style="border-radius: 8px; overflow: hidden;">
+                <div class="modal-header text-white" style="background-color: var(--container_jogos--color);">
+                    <h5 class="modal-title font-weight-bold" style="font-size: 15px;">
+                        <i class="fa fa-line-chart mr-1"></i> Mais Cotações: 
+                        <span v-if="mJogo.jogo">${mJogo.jogo.casa} x ${mJogo.jogo.fora}</span>
+                    </h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-0">
+                    <!-- Abas de Tempo (90 min, 1º Tempo, 2º Tempo) -->
+                    <div class="p-3 bg-light border-bottom d-flex" style="gap: 8px;">
+                        <button type="button" class="btn btn-sm font-weight-bold"
+                                :class="key == mJogo.tempo ? 'btn-danger' : 'btn-outline-secondary'"
+                                v-for="(tempo, key) in tempos" v-on:click="mJogo.tempo = key">
+                            ${tempo}
+                        </button>
+                    </div>
+
+                    <!-- Mercados Agrupados -->
+                    <div class="p-3" v-if="mJogo.jogo" style="max-height: calc(80vh - 120px); overflow-y: auto;">
+                        <div v-for="(grupo, id) in grupos" class="mb-3">
+                            <div class="font-weight-bold small text-uppercase text-white px-3 py-2 rounded-top"
+                                 style="background: var(--sidebar--color);">
+                                ${grupo}
+                            </div>
+                            <div class="border rounded-bottom bg-white p-2">
+                                <div class="row no-gutters">
+                                    <div v-for="c in cotacoes"
+                                         v-if="c.grupo == id && mJogo.jogo.cotacoes[mJogo.tempo] && mJogo.jogo.cotacoes[mJogo.tempo][c.campo] > 1"
+                                         class="col-12 col-md-6 p-1">
+                                        <div class="d-flex align-items-center justify-content-between p-2 rounded border" style="background: #f8fafc;">
+                                            <span class="small font-weight-bold text-dark text-truncate mr-2">${c.title}</span>
+                                            <div class="btn-cotacao" style="min-width: 55px; height: 34px !important;"
+                                                 :class="{active: mJogo.jogo.apostaEm == mJogo.tempo + c.campo}"
+                                                 v-on:click="apostar(mJogo.jogo, mJogo.tempo, c)">
+                                                ${mJogo.jogo.cotacoes[mJogo.tempo][c.campo]|maskReal}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block main %}
+
+    <div id="pg-aposta" v-cloak>
+
+        <!-- Barra de Abas de Navegação e Filtros Rápidos (menu-jogos) -->
+        <div class="menu-jogos-tabs">
+            <a href="javascript:;" class="tab-item" v-on:click="setCampeonato(); setData();" :class="{ active: !checkFiltros() }">
+                <i class="fa fa-globe"></i> Todos os Jogos
+            </a>
+            <a href="javascript:;" class="tab-item" v-on:click="setData('{{ hoje }}')" :class="{ active: findData == '{{ hoje }}' }">
+                <i class="fa fa-calendar-check-o"></i> Jogos de Hoje
+            </a>
+            <a href="javascript:;" class="tab-item" v-on:click="setData('{{ amanha }}')" :class="{ active: findData == '{{ amanha }}' }">
+                <i class="fa fa-calendar-o"></i> Jogos de Amanhã
+            </a>
+            <a href="javascript:;" class="tab-item" v-for="d in datas" v-if="d.data != '{{ hoje }}' && d.data != '{{ amanha }}'" v-on:click="setData(d.data)" :class="{ active: findData == d.data }">
+                <i class="fa fa-calendar-o"></i> ${d.title}
+            </a>
+        </div>
+
+        <!-- Barra de Busca Rápida de Jogos -->
+        <div class="search-jogos-bar">
+            <i class="fa fa-search text-muted"></i>
+            <input type="text" v-model="search" placeholder="Pesquisar time, campeonato ou confronto..."/>
+            <button v-if="search" class="btn btn-sm btn-link text-muted p-0" v-on:click="search = ''">
+                <i class="fa fa-times-circle"></i>
+            </button>
+        </div>
+
+        <!-- Grid de 3 Colunas Bonanza Sport -->
+        <div class="row page-aposta">
+            
+            <!-- Coluna 1: Sidebar Campeonatos (Desktop) -->
+            <div class="col-xl-2 col-lg-3 d-none d-lg-block col-campeonatos-sidebar mb-3">
+                <div class="campeonatos">
+                    <h3 class="title">
+                        <i class="fa fa-trophy"></i> Campeonatos
+                    </h3>
+                    <ul>
+                        <li>
+                            <a href="javascript:;" v-on:click="setCampeonato()" :class="{ active: !checkFiltros() }">
+                                <span><i class="fa fa-angle-right mr-1"></i> Todos os Jogos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" v-on:click="setData('{{ hoje }}')" :class="{ active: findData == '{{ hoje }}' }">
+                                <span>Hoje ({{ hoje|split('-')|reverse|join("/") }})</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" v-on:click="setData('{{ amanha }}')" :class="{ active: findData == '{{ amanha }}' }">
+                                <span>Amanhã ({{ amanha|split('-')|reverse|join('/') }})</span>
+                            </a>
+                        </li>
+                        <li v-for="(p, i) in paises" :key="p.id">
+                            <a href="javascript:;" v-on:click="setPais(p)" :class="{ active: findPais == p.id }">
+                                <span class="d-flex align-items-center">
+                                    <img v-if="p.img" :src="p.img" style="height: 14px; width: 14px; object-fit: contain;" class="mr-2"/>
+                                    ${p.title}
+                                </span>
+                                <i class="fa fa-chevron-right small text-muted"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Coluna 2: Jogos e Banners (Centro) -->
+            <div class="col-xl-7 col-lg-6 col-12 col-jogos-center mb-3">
+                <!-- Slideshow promocional -->
+                <div class="mb-3">
+                    {% include 'website/inc/slideshow.twig' with {ref: 'site-slideshow'} %}
+                </div>
+
+                <!-- Seletor de Campeonatos para Mobile -->
+                <div class="d-block d-lg-none mb-3">
+                    <select v-model="findCampeonato" class="form-control form-control-sm font-weight-bold">
+                        <option value="*">-- Filtrar por Campeonato --</option>
+                        <optgroup v-for="p in paises" :label="p.title" :key="p.id">
+                            <option v-for="c in p.campeonatos" :value="c.id" :key="c.id">${c.title}</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <!-- Lista de Jogos -->
+                {{ block('jogos') }}
+            </div>
+
+            <!-- Coluna 3: Cupom de Apostas (Direita - Sticky no Desktop) -->
+            <div class="col-xl-3 col-lg-3 col-12 col-bilhete-sidebar mb-3">
+                {{ block('bilhete') }}
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block script %}
+
+    <script src="node_modules/vue/dist/vue.min.js"></script>
+    <script src="node_modules/axios/dist/axios.js"></script>
+    <script src="node_modules/lodash/lodash.min.js"></script>
+
+    {% set _sliderBanners = [] %}
+    {% for _b in banners('site-slideshow', null, null, 10) %}
+        {% set _sliderBanners = _sliderBanners|merge([{
+            id: _b.getId(),
+            title: _b.getTitle(),
+            link: _b.getLink(),
+            target: _b.getLinktarget(),
+            imgDesktop: _b.imgCapa(true, 'desktop').getSource(true),
+            imgMobile: _b.imgCapa(true, 'mobile').getSource(true)
+        }]) %}
+    {% endfor %}
+
+    <script type="text/javascript">
+
+        var app = new Vue({
+            el: '{{ selector|default('#website') }}',
+            delimiters: ['${', '}'],
+            created() {
+
+                $('html').addClass('loading');
+
+                // Relógio reativo: a cada 15s reavalia os jogos (apenas os jogos que fecharam saem da tela e do cupom)
+                setInterval(() => {
+                    this.agora = Date.now();
+                    for (var k = this.aposta.jogos.length - 1; k >= 0; k--) {
+                        var item = this.aposta.jogos[k];
+                        if (item && item.jogo && !this.jogoAberto(item.jogo)) {
+                            item.jogo.apostaEm = null;
+                            item.jogo.outras = false;
+                            this.aposta.jogos.splice(k, 1);
+                        }
+                    }
+                }, 15000);
+
+                // Carrossel do Hero Showcase: rotação automática a cada 5 segundos
+                setInterval(() => {
+                    if (!this.heroPaused && this.heroSlides && this.heroSlides.length > 1) {
+                        this.heroIndex = (this.heroIndex + 1) % this.heroSlides.length;
+                    }
+                }, 5000);
+
+                for (var i = this.aposta.jogos.length - 1; i >= 0; i--) {
+                    var item = this.aposta.jogos[i];
+                    if (item && item.jogo && !this.jogoAberto(item.jogo)) {
+                        item.jogo.apostaEm = null;
+                        item.jogo.outras = false;
+                        this.aposta.jogos.splice(i, 1);
+                    }
+                }
+
+                axios
+                    .get(url('apostar/jogos'))
+                    .then((response) => {
+                        this.grupos = response.data.grupos;
+                        this.cotacoes = response.data.cotacoes;
+                        this.paises = response.data.paises;
+                        this.datas = response.data.datas;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                    .then(() => {
+                        $('html').removeClass('loading');
+                        $(window).resize();
+                    });
+
+            },
+            data() {
+                return {
+                    valorAposta: {{ apostaMinima }},
+                    agora: Date.now(),
+                    findCampeonato: '*',
+                    search: '',
+                    findData: '{{ hoje }}',
+                    findPais: '*',
+                    tempos: {90: 'Jogo completo', pt: 'Primeiro tempo', st: 'Segundo tempo'},
+                    cliente: '',
+                    telefone: '',
+                    revendedor: '',
+                    grupos: {},
+                    auth: {
+                        username: '',
+                        password: '',
+                    },
+                    datas: {},
+                    mJogo: {
+                        jogo: null,
+                        tempo: 90,
+                    },
+                    cotacoes: [],
+                    paises: [],
+                    aposta: {
+                        jogos: [],
+                    },
+                    cotacaoMaxima: {{ cotacaoMaxima ?: 99999999 }},
+                    cotacaoMinima: {{ cotacaoMinima ?: 1 }},
+                    condicaoCotacao: {{ condicaoCotacao|json_encode|raw }},
+                    apostaMinima: {{ apostaMinima ?: 1 }},
+                    apostaMaxima: {{ apostaMaxima ?: 999999 }},
+                    retornoMaximo: {{ retornoMaximo ?: 99999999 }},
+                    minJogos: {{ minJogos ?: 1 }},
+                    heroIndex: 0,
+                    heroPaused: false,
+                    adminBanners: {{ _sliderBanners|json_encode|raw }},
+                };
+            },
+            filters: {
+                maskReal(value) {
+                    if (!value) return '0,00';
+                    var n = parseFloat(value);
+                    if (isNaN(n) || n <= 0) return '0,00';
+                    return n.toFixed(2).replace('.', ',');
+                }
+            },
+            computed: {
+                cotacoesGrupos() {
+                    var arr = [];
+                    if (this.grupos) {
+                        Object.keys(this.grupos).forEach((k) => {
+                            arr.push({ id: k, title: this.grupos[k] });
+                        });
+                    }
+                    return arr;
+                },
+                cotacao() {
+                    return this.getCotacao();
+                },
+                premio() {
+                    return this.getPremio().toString().toReal();
+                },
+                premioRevenda() {
+                    return (this.getPremio() * (100 - {{ premioRevenda|default(0) }}) / 100).toString().toReal();
+                },
+                valorCotacao() {
+                    return this.getCotacao().toString().toReal();
+                },
+                apostaValida() {
+                    if (this.aposta.jogos.length >= this.minJogos) {
+                        if (this.getCotacao() >= this.getCotacaoMinima()) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                featuredHeroGames() {
+                    var games = [];
+                    var comps = this.getCampeonatos();
+                    if (comps && comps.length) {
+                        for (var c = 0; c < comps.length; c++) {
+                            var jgs = this.getJogos(comps[c]);
+                            if (jgs && jgs.length) {
+                                for (var j = 0; j < jgs.length; j++) {
+                                    games.push({
+                                        jogo: jgs[j],
+                                        campeonato: comps[c]
+                                    });
+                                    if (games.length >= 4) break;
+                                }
+                            }
+                            if (games.length >= 4) break;
+                        }
+                    }
+                    return games;
+                },
+                heroSlides() {
+                    var slides = [];
+                    var games = this.featuredHeroGames || [];
+                    var banners = this.adminBanners || [];
+                    
+                    if (games.length > 0 && banners.length > 0) {
+                        for (var i = 0; i < games.length; i++) {
+                            slides.push({
+                                type: 'game',
+                                jogo: games[i].jogo,
+                                campeonato: games[i].campeonato
+                            });
+                            var bIdx = i % banners.length;
+                            slides.push({
+                                type: 'banner',
+                                banner: banners[bIdx]
+                            });
+                        }
+                    } else if (games.length > 0) {
+                        for (var g = 0; g < games.length; g++) {
+                            slides.push({
+                                type: 'game',
+                                jogo: games[g].jogo,
+                                campeonato: games[g].campeonato
+                            });
+                        }
+                    } else if (banners.length > 0) {
+                        for (var b = 0; b < banners.length; b++) {
+                            slides.push({
+                                type: 'banner',
+                                banner: banners[b]
+                            });
+                        }
+                    }
+                    return slides;
+                },
+            },
+            methods: {
+                prevHeroSlide() {
+                    var total = (this.heroSlides || []).length;
+                    if (total > 0) {
+                        this.heroIndex = (this.heroIndex - 1 + total) % total;
+                    }
+                },
+                nextHeroSlide() {
+                    var total = (this.heroSlides || []).length;
+                    if (total > 0) {
+                        this.heroIndex = (this.heroIndex + 1) % total;
+                    }
+                },
+                setHeroSlide(idx) {
+                    this.heroIndex = idx;
+                },
+                pauseHero(val) {
+                    this.heroPaused = val;
+                },
+                getMatchCountdown(jogo) {
+                    if (!jogo) return { val1: '00', lbl1: 'Dias', val2: '00', lbl2: 'Horas', val3: '00', lbl3: 'Min' };
+                    try {
+                        var dtJogo = null;
+                        if (jogo.dateTime) {
+                            dtJogo = new Date(jogo.dateTime);
+                        } else if (jogo.data && jogo.hora) {
+                            var pData = jogo.data.split('-');
+                            var pHora = jogo.hora.split(':');
+                            dtJogo = new Date(pData[0], pData[1] - 1, pData[2], pHora[0], pHora[1], pHora[2] || 0);
+                        }
+                        if (!dtJogo || isNaN(dtJogo.getTime())) {
+                            return { val1: '00', lbl1: 'Dias', val2: '00', lbl2: 'Horas', val3: '00', lbl3: 'Min' };
+                        }
+                        var diff = dtJogo.getTime() - this.agora;
+                        if (diff <= 0) {
+                            return { val1: 'AO', lbl1: 'VIVO', val2: 'EM', lbl2: 'JOGO', val3: '90\'', lbl3: 'Min' };
+                        }
+                        var totalMin = Math.floor(diff / (1000 * 60));
+                        var dias = Math.floor(totalMin / (60 * 24));
+                        var horas = Math.floor((totalMin % (60 * 24)) / 60);
+                        var mins = totalMin % 60;
+                        var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
+                        return {
+                            val1: pad(dias), lbl1: 'Dias',
+                            val2: pad(horas), lbl2: 'Horas',
+                            val3: pad(mins), lbl3: 'Min'
+                        };
+                    } catch(e) {
+                        return { val1: '00', lbl1: 'Dias', val2: '00', lbl2: 'Horas', val3: '00', lbl3: 'Min' };
+                    }
+                },
+                maskReal(value) {
+                    if (!value) return '0,00';
+                    var n = parseFloat(value);
+                    if (isNaN(n) || n <= 0) return '0,00';
+                    return n.toFixed(2).replace('.', ',');
+                },
+                onAuth() {
+                    $("html").addClass('page-loading');
+                    axios
+                        .post('entrar/login/insert', this.auth)
+                        .then((response) => {
+                            if (response.data.result == 1) {
+                                window.location.reload();
+                            } else {
+                                $('html').removeClass('page-loading');
+                                window.alert(response.data.message);
+                            }
+                        })
+                        .catch((err) => {
+                            alert('Não foi possível acessar');
+                            $('html').removeClass('page-loading');
+                        });
+                },
+                getCotacao() {
+                    var cotacao = 1;
+                    if (this.aposta && Array.isArray(this.aposta.jogos)) {
+                        this.aposta.jogos.forEach((v) => {
+                            if (v && v.jogo && v.jogo.cotacoes && v.jogo.cotacoes[v.tempo] && v.cotacao && v.cotacao.campo) {
+                                var val = parseFloat(v.jogo.cotacoes[v.tempo][v.cotacao.campo]);
+                                if (!isNaN(val) && val > 0) {
+                                    cotacao *= val;
+                                }
+                            }
+                        });
+                    }
+                    return parseFloat(Math.min(cotacao, this.cotacaoMaxima || 999999));
+                },
+                getCotacaoMinima() {
+                    var cotacaoMinima = this.cotacaoMinima || 1;
+                    var valorAposta = parseFloat(this.valorAposta) || 0;
+                    if (Array.isArray(this.condicaoCotacao)) {
+                        this.condicaoCotacao.forEach((value, index) => {
+                            if (value && (value.min > 0 || value.max > 0) && value.cotacao > 0) {
+                                if (value.min <= valorAposta && value.max >= valorAposta) {
+                                    cotacaoMinima = value.cotacao;
+                                }
+                            }
+                        });
+                    }
+                    return cotacaoMinima;
+                },
+                getPremio() {
+                    var valorAposta = this.valorAposta;
+                    var cotacao = this.getCotacao();
+                    if (cotacao > 1) {
+                        return Math.min(valorAposta * cotacao, this.retornoMaximo);
+                    } else {
+                        return 0;
+                    }
+                },
+                getCotacoesPrincipais() {
+                    var cotacoes = [];
+                    if (this.cotacoes) {
+                        this.cotacoes.forEach((c) => {
+                            if (c.principal == '1')
+                                cotacoes.push(c);
+                        });
+                    }
+                    return cotacoes;
+                },
+                totalCotacoes(cotacoes) {
+                    var total = 0;
+                    if (cotacoes && typeof cotacoes === 'object') {
+                        Object.values(cotacoes).forEach((c) => {
+                            if (c && typeof c === 'object') {
+                                Object.values(c).forEach((v) => {
+                                    if (parseFloat(v) > 1)
+                                        total++;
+                                });
+                            }
+                        });
+                    }
+                    return total;
+                },
+                getCotacoesByGrupo(grupo, tempo) {
+                    tempo = tempo || (this.mJogo ? this.mJogo.tempo : 90);
+                    var grupoId = (typeof grupo === 'object' && grupo !== null) ? (grupo.id || grupo) : grupo;
+                    var list = [];
+                    if (this.cotacoes && this.mJogo && this.mJogo.jogo && this.mJogo.jogo.cotacoes && this.mJogo.jogo.cotacoes[tempo]) {
+                        var odds = this.mJogo.jogo.cotacoes[tempo];
+                        this.cotacoes.forEach((c) => {
+                            if (c.grupo == grupoId && odds[c.campo] && parseFloat(odds[c.campo]) > 1) {
+                                list.push(c);
+                            }
+                        });
+                    }
+                    return list;
+                },
+                getPaises() {
+                    var paises = [];
+                    this.paises.forEach((pais) => {
+                        if (this.filterPais(pais)) {
+                            paises.push(pais);
+                        }
+                    });
+                    return paises;
+                },
+                getCampeonatos(pais, enableFilter) {
+                    var campeonatos = [];
+                    if (pais) {
+                        pais.campeonatos.forEach((c) => {
+                            if (enableFilter === false || this.filterCampeonato(c)) {
+                                campeonatos.push(c);
+                            }
+                        });
+                    } else {
+                        (enableFilter === false ? this.paises : this.getPaises()).forEach((p) => {
+                            p.campeonatos.forEach((c) => {
+                                if (enableFilter === false || this.filterCampeonato(c)) {
+                                    campeonatos.push(c);
+                                }
+                            });
+                        });
+                    }
+                    return campeonatos;
+                },
+                getJogos(campeonato) {
+                    var jogos = [];
+                    campeonato.jogos.forEach((jogo) => {
+                        if (this.filterJogo(jogo)) {
+                            jogos.push(jogo);
+                        }
+                    });
+                    return jogos;
+                },
+                checkFiltros() {
+                    if (!this.findData || this.findData == '{{ hoje }}') {
+                        if (this.findPais == '*' && this.findCampeonato == '*') {
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+                filterPais(pais) {
+                    if (this.findPais == '*' || this.findPais == pais.id) {
+                        if (this.getCampeonatos(pais, true).length > 0) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                filterCampeonato(campeonato) {
+                    if (this.findCampeonato == '*' || this.findCampeonato == campeonato.id) {
+                        if (this.getJogos(campeonato).length) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                jogoAberto(jogo) {
+                    if (!jogo) return false;
+                    var margemMinutos = (parseInt({{ dados.getMinutosJogo() }}) || 0) + 5;
+                    var dtLimite = new Date(this.agora + (margemMinutos * 60 * 1000));
+
+                    var dtJogo = null;
+                    if (jogo.dateTime) {
+                        dtJogo = new Date(jogo.dateTime);
+                    } else if (jogo.data && jogo.hora) {
+                        var partesData = jogo.data.split('-');
+                        var partesHora = jogo.hora.split(':');
+                        dtJogo = new Date(partesData[0], partesData[1] - 1, partesData[2], partesHora[0], partesHora[1], partesHora[2] || 0);
+                    }
+
+                    if (!dtJogo || isNaN(dtJogo.getTime())) {
+                        return false;
+                    }
+
+                    return dtJogo.getTime() > dtLimite.getTime();
+                },
+                filterJogo(jogo) {
+                    if (!this.jogoAberto(jogo)) {
+                        return false;
+                    }
+                    if (this.findData && jogo.data != this.findData) {
+                        return false;
+                    }
+                    if (this.search) {
+                        var exp = new RegExp(this.search, 'i');
+                        if (jogo.casa.search(exp) === -1 && jogo.fora.search(exp) === -1) {
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+                setPais(pais) {
+                    if (pais) {
+                        this.findPais = pais.id;
+                        this.findCampeonato = '*';
+                    } else {
+                        this.findPais = '*';
+                    }
+                    this.findData = '{{ hoje }}';
+                },
+                setCampeonato(campeonato) {
+                    $('html').removeClass('show-menu show-filtros');
+                    if (campeonato) {
+                        this.findCampeonato = campeonato.id;
+                        if (this.findPais != '*' && this.findPais != campeonato.pais) {
+                            this.findPais = '*';
+                        }
+                    } else {
+                        this.findCampeonato = '*';
+                    }
+                    this.findData = '{{ hoje }}';
+                },
+                setData(data) {
+                    $('html').removeClass('show-menu show-filtros');
+                    this.findCampeonato = '*';
+                    this.findPais = '*';
+                    this.findData = data || '{{ hoje }}';
+                },
+                maisCotacoes(jogo) {
+                    this.mJogo.jogo = jogo;
+                    this.mJogo.tempo = 90;
+                    $('#modal-cotacoes').modal("show");
+                },
+                apostar(jogo, tempo, cotacao) {
+                    if (!jogo || !cotacao || !cotacao.campo) return;
+                    if (!this.jogoAberto(jogo)) {
+                        swal('Aviso!', 'Este jogo não está mais recebendo apostas.', 'warning');
+                        return;
+                    }
+                    if (!jogo.cotacoes || !jogo.cotacoes[tempo] || !(parseFloat(jogo.cotacoes[tempo][cotacao.campo]) > 1)) {
+                        return;
+                    }
+                    let apostaEm = tempo + cotacao.campo;
+                    if (jogo.apostaEm) {
+                        // Removendo jogo da aposta
+                        for (var index = this.aposta.jogos.length - 1; index >= 0; index--) {
+                            if (this.aposta.jogos[index].jogo.id == jogo.id) {
+                                this.aposta.jogos.splice(index, 1);
+                            }
+                        }
+
+                        if (jogo.apostaEm === apostaEm) {
+                            jogo.apostaEm = null;
+                        } else {
+                            jogo.apostaEm = null;
+                            if (this.jogoAberto(jogo))
+                                this.apostar(jogo, tempo, cotacao);
+                        }
+                    } else {
+                        if (this.cotacaoMaxima > 0 && this.getCotacao() == this.cotacaoMaxima) {
+                            swal('Aviso!', 'Sua aposta já atingiu a cotação máxima.', 'warning');
+                        } else {
+                            for (var i = this.aposta.jogos.length - 1; i >= 0; i--) {
+                                var v = this.aposta.jogos[i];
+                                if (v.jogo.id == jogo.id || !this.jogoAberto(v.jogo)) {
+                                    if (v.jogo.id != jogo.id) {
+                                        v.jogo.apostaEm = null;
+                                        v.jogo.outras = false;
+                                    }
+                                    this.aposta.jogos.splice(i, 1);
+                                }
+                            }
+
+                            jogo.apostaEm = apostaEm;
+
+                            if (cotacao.principal == '1' && tempo == '90') {
+                                jogo.outras = false;
+                            } else {
+                                jogo.outras = true;
+                            }
+
+                            this.aposta.jogos.push({
+                                jogo: jogo,
+                                tempo: tempo,
+                                cotacao: cotacao,
+                            });
+
+                            $('#modal-cotacoes').modal("hide");
+                        }
+                    }
+                },
+                rmAposta(index) {
+                    var aposta = this.aposta.jogos[index];
+                    if (aposta) {
+                        aposta.jogo.apostaEm = null;
+                        aposta.jogo.outras = false;
+                        this.aposta.jogos.splice(index, 1);
+                    }
+                },
+                limpaAposta() {
+                    this.aposta.jogos.forEach((j) => {
+                        j.jogo.apostaEm = null;
+                        j.jogo.outras = false;
+                    });
+                    this.aposta.jogos = [];
+                    $(".bilhete").removeClass('show');
+                },
+                imprimir(campeonato) {
+                    if (campeonato) {
+                        window.open(url('apostar/imprimirTabela') + '?campeonato=' + campeonato, '_blank');
+                    } else {
+                        window.open(url('apostar/imprimirTabela') + '?campeonato=' + (this.findCampeonato || null) + '&data=' + (this.findData || '') + '&search=' + (this.search || ''), '_blank');
+                    }
+                },
+                finalizarAposta() {
+                    var aposta = {
+                        valor: this.valorAposta,
+                        cliente: this.cliente,
+                        telefone: this.telefone,
+                        revendedor: this.revendedor,
+                        jogos: [],
+                    };
+
+                    this.aposta.jogos.forEach((v, index) => {
+                        aposta.jogos.push({
+                            jogo: v.jogo.id,
+                            tempo: v.tempo,
+                            cotacao: v.cotacao.campo,
+                        });
+                    });
+
+                    $('html').addClass('loading').removeClass('show-bilhete');
+
+                    axios
+                        .post(url('apostar/apostar'), aposta)
+                        .then((response) => {
+                            var e = response.data;
+                            if (e.result == 1) {
+                                this.limpaAposta();
+                                this.valorAposta = this.apostaMinima;
+                                window.localStorage.removeItem('apostaJogos');
+
+                                if (e.codigo) {
+                                    swal({
+                                        title: $.trim(e.codigo.replace(/(.{3})/g, '$1 ')),
+                                        text: 'Bilhete gerado com sucesso!\nProcure um dos nossos cambistas para validar o seu bilhete.',
+                                        icon: 'success',
+                                        button: {
+                                            text: 'Compartilhar whatsapp',
+                                            closeModal: true,
+                                            value: {link: e.link, share: e.share},
+                                        }
+                                    }).then((e) => {
+                                        if (e && e.share) {
+                                            window.open(e.share, '_blank');
+                                        }
+                                    });
+                                } else {
+                                    swal('Sucesso', 'Aposta realizada com sucesso!', 'success');
+                                }
+                            } else {
+                                // Atualiza relógio e remove apenas jogos encerrados do cupom
+                                this.agora = Date.now();
+                                for (var k = this.aposta.jogos.length - 1; k >= 0; k--) {
+                                    var item = this.aposta.jogos[k];
+                                    if (item && item.jogo && !this.jogoAberto(item.jogo)) {
+                                        item.jogo.apostaEm = null;
+                                        item.jogo.outras = false;
+                                        this.aposta.jogos.splice(k, 1);
+                                    }
+                                }
+                                swal('Aviso!', e.message, 'warning');
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            $('html').removeClass('loading');
+                        });
+                }
+            }
+        });
+
+    </script>
+
+{% endblock %}

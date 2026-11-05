@@ -1,0 +1,270 @@
+<!-- HEADER MOBILE (Visível apenas em telas menores que 992px) -->
+<header class="bonanza-mobile-header d-flex d-lg-none">
+    <button type="button" class="btn-toggle-menu" onclick="$('html').toggleClass('show-menu');">
+        <i class="fa fa-bars"></i>
+    </button>
+    <a href="{{ url() }}" class="mobile-brand">
+        <img src="{{ dados.imgCapa(true, 'logo').getSource(true) }}" alt="{{ dados.getBanca() }}"/>
+    </a>
+    <div class="d-flex align-items-center" style="gap: 8px;">
+        {% if dados.getExibirBilhete() %}
+            <a href="{{ url('bilhete') }}" class="btn-quick-bilhete" title="Consultar Bilhete">
+                <i class="fa fa-search"></i>
+            </a>
+        {% endif %}
+        {% if user %}
+            <a href="{{ url('financeiro/extrato') }}" class="btn-quick-bilhete" style="background: var(--sidebar--color);">
+                <i class="fa fa-user"></i>
+            </a>
+        {% elseif dados.getExibirLogin() %}
+            <a href="#modal-login" data-toggle="modal" class="btn-quick-bilhete" style="background: var(--sidebar--color);">
+                <i class="fa fa-sign-in"></i> Entrar
+            </a>
+        {% endif %}
+    </div>
+</header>
+
+<!-- MENU LATERAL OFF-CANVAS MOBILE -->
+<div class="menu-mobile" onclick="event.stopPropagation();">
+    <div class="header">
+        <span><i class="fa fa-bars mr-2"></i> Menu</span>
+        <div class="btn btn-sm btn-link text-white p-0" onclick="$('html').removeClass('show-menu');">
+            <i class="fa fa-times fa-lg"></i>
+        </div>
+    </div>
+    
+    {% if user %}
+        <div class="p-3 text-center" style="background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.08);">
+            <img src="{{ user.imgCapa().redimensiona(70,70) }}" class="rounded-circle border mb-2" style="border-width: 2px !important;"/>
+            <div class="text-white font-weight-bold">{{ user.getNome() }}</div>
+            <div class="text-warning small font-weight-bold">Saldo: R$ {{ user.getCredito(true) }}</div>
+        </div>
+    {% endif %}
+
+    <ul>
+        <li>
+            <a href="{{ url() }}" onclick="$('html').removeClass('show-menu');">
+                <i class="fa fa-futbol-o"></i> Jogos
+            </a>
+        </li>
+        {% if dados.getExibirCassino() %}
+            <li>
+                <a href="{{ url('cassino') }}" onclick="$('html').removeClass('show-menu');">
+                    <i class="fa fa-gamepad text-warning"></i> Cassino
+                </a>
+            </li>
+        {% endif %}
+        {% if dados.getExibirBilhete() %}
+            <li>
+                <a href="{{ url('bilhete') }}" onclick="$('html').removeClass('show-menu');">
+                    <i class="fa fa-file-text-o"></i> Consultar Bilhete
+                </a>
+            </li>
+        {% endif %}
+        {% if dados.getExibirComunicados() %}
+            <li>
+                <a href="{{ url('comunicados') }}" onclick="$('html').removeClass('show-menu');">
+                    <i class="fa fa-bullhorn"></i> Comunicados
+                </a>
+            </li>
+        {% endif %}
+        {% if dados.getExibirRegras() %}
+            <li>
+                <a href="{{ url('regras') }}" onclick="$('html').removeClass('show-menu');">
+                    <i class="fa fa-book"></i> Regulamento
+                </a>
+            </li>
+        {% endif %}
+        {% if dados.getExibirCotacoes() %}
+            <li>
+                <a href="{{ url('cotacoes') }}" onclick="$('html').removeClass('show-menu');">
+                    <i class="fa fa-line-chart"></i> Cotações
+                </a>
+            </li>
+        {% endif %}
+        {% if dados.getExibirContato() %}
+            <li>
+                <a href="{{ url('contato') }}" onclick="$('html').removeClass('show-menu');">
+                    <i class="fa fa-envelope-o"></i> Contato
+                </a>
+            </li>
+        {% endif %}
+        {% if dados.getExibirApp() and (dados.getApp() or true) %}
+            <li>
+                <a href="{{ dados.getApp()|default(url('app')) }}" target="_blank" onclick="$('html').removeClass('show-menu');">
+                    <i class="fa fa-android text-success"></i> Baixar App
+                </a>
+            </li>
+        {% endif %}
+        {% if user %}
+            <li>
+                <a href="{{ url('apostas') }}" onclick="$('html').removeClass('show-menu');">
+                    <i class="fa fa-list"></i> Minhas Apostas
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('financeiro/extrato') }}" onclick="$('html').removeClass('show-menu');">
+                    <i class="fa fa-money"></i> Extrato Financeiro
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('logout') }}" class="text-danger" onclick="$('html').removeClass('show-menu');">
+                    <i class="fa fa-sign-out"></i> Sair da Conta
+                </a>
+            </li>
+        {% else %}
+            {% if dados.getExibirLogin() %}
+                <li>
+                    <a href="#modal-login" data-toggle="modal" onclick="$('html').removeClass('show-menu');">
+                        <i class="fa fa-sign-in"></i> Entrar
+                    </a>
+                </li>
+            {% endif %}
+            {% if dados.getExibirRegistro() %}
+                <li>
+                    <a href="{{ dados.getLinkCadastro()|default(url('cadastrar')) }}" onclick="$('html').removeClass('show-menu');">
+                        <i class="fa fa-user-plus"></i> Criar Nova Conta
+                    </a>
+                </li>
+            {% endif %}
+        {% endif %}
+    </ul>
+</div>
+
+<!-- CABEÇALHO DESKTOP FULL-WIDTH BONANZA SPORT (Visível a partir de 992px) -->
+<header class="bonanza-navbar d-none d-lg-block">
+    <div class="nav-container">
+        <!-- Logo -->
+        <a href="{{ url() }}" class="brand-logo">
+            <img src="{{ dados.imgCapa(true, 'logo').getSource(true) }}" alt="{{ dados.getBanca() }}"/>
+        </a>
+
+        <!-- Links de Navegação -->
+        <ul class="bonanza-nav-links">
+            <li>
+                <a href="{{ url() }}" class="{% if controller is not defined or controller == 'apostar' or controller == 'index' %}active{% endif %}">
+                    <i class="fa fa-futbol-o"></i> Jogos
+                </a>
+            </li>
+            {% if dados.getExibirBilhete() %}
+                <li>
+                    <a href="{{ url('bilhete') }}" class="{{ controller == 'bilhete' ? 'active' : '' }}">
+                        <i class="fa fa-search"></i> Consultar Bilhete
+                    </a>
+                </li>
+            {% endif %}
+            {% if dados.getExibirCassino() %}
+                <li>
+                    <a href="{{ url('cassino') }}" class="{{ controller == 'cassino' ? 'active' : '' }}">
+                        <i class="fa fa-gamepad text-warning"></i> Cassino
+                    </a>
+                </li>
+            {% endif %}
+            {% if dados.getExibirComunicados() %}
+                <li>
+                    <a href="{{ url('comunicados') }}" class="{{ controller == 'comunicados' ? 'active' : '' }}">
+                        <i class="fa fa-bullhorn"></i> Comunicados
+                    </a>
+                </li>
+            {% endif %}
+            {% if dados.getExibirRegras() %}
+                <li>
+                    <a href="{{ url('regras') }}" class="{{ controller == 'regras' ? 'active' : '' }}">
+                        <i class="fa fa-book"></i> Regulamento
+                    </a>
+                </li>
+            {% endif %}
+            {% if dados.getExibirCotacoes() %}
+                <li>
+                    <a href="{{ url('cotacoes') }}" class="{{ controller == 'cotacoes' ? 'active' : '' }}">
+                        <i class="fa fa-line-chart"></i> Cotações
+                    </a>
+                </li>
+            {% endif %}
+            {% if dados.getExibirContato() %}
+                <li>
+                    <a href="{{ url('contato') }}" class="{{ controller == 'contato' ? 'active' : '' }}">
+                        <i class="fa fa-envelope-o"></i> Contato
+                    </a>
+                </li>
+            {% endif %}
+            {% if user %}
+                <li>
+                    <a href="{{ url('apostas') }}" class="{{ controller == 'apostas' ? 'active' : '' }}">
+                        <i class="fa fa-list"></i> Minhas Apostas
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+
+        <!-- Ações do Usuário -->
+        <div class="bonanza-user-actions">
+            {% if not user %}
+                {% if dados.getExibirLogin() %}
+                    <a href="#modal-login" data-toggle="modal" class="btn-login-top">
+                        <i class="fa fa-sign-in"></i> Entrar
+                    </a>
+                {% endif %}
+                {% if dados.getExibirRegistro() %}
+                    <a href="{{ dados.getLinkCadastro()|default(url('cadastrar')) }}" class="btn-register-top">
+                        <i class="fa fa-user-plus"></i> Cadastrar
+                    </a>
+                {% endif %}
+            {% else %}
+                <div class="dropdown">
+                    <a href="javascript:;" class="user-balance-badge dropdown-toggle text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-wallet mr-1"></i> Saldo: <span class="val">R$ {{ user.getCredito(true) }}</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow">
+                        <a class="dropdown-item" href="{{ url('financeiro/extrato') }}"><i class="fa fa-list-alt mr-2"></i> Extrato</a>
+                        <a class="dropdown-item" href="{{ url('financeiro/deposito') }}"><i class="fa fa-arrow-down text-success mr-2"></i> Depósito</a>
+                        <a class="dropdown-item" href="{{ url('financeiro/transferencia') }}"><i class="fa fa-exchange mr-2"></i> Transferência</a>
+                        <a class="dropdown-item" href="{{ url('financeiro/saque') }}"><i class="fa fa-arrow-up text-danger mr-2"></i> Saque</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="{{ url('logout') }}"><i class="fa fa-sign-out mr-2"></i> Sair</a>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center text-white ml-2" style="gap: 8px;">
+                    <img src="{{ user.imgCapa().redimensiona(36,36) }}" class="rounded-circle border" style="width: 36px; height: 36px;"/>
+                    <span class="small font-weight-bold">{{ user.getNome() }}</span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+<!-- BARRA DE NAVEGAÇÃO INFERIOR FIXA NO CELULAR (sports-mobile-bottom-nav) -->
+<nav class="sports-mobile-bottom-nav">
+    <div class="nav-bottom-item" onclick="$('html').toggleClass('show-menu');">
+        <i class="fa fa-bars"></i>
+        <span>Menu</span>
+    </div>
+    <a href="{{ url() }}" class="nav-bottom-item{% if controller is not defined or controller == 'apostar' or controller == 'index' %} active{% endif %}">
+        <i class="fa fa-futbol-o"></i>
+        <span>Jogos</span>
+    </a>
+    <div class="nav-bottom-item" onclick="{% if pageAposta %}$('.bilhete').toggleClass('show');{% else %}window.location.href='{{ url() }}';{% endif %}">
+        <i class="fa fa-ticket"></i>
+        <span>Cupom</span>
+        {% if pageAposta %}
+            <span class="badge-count" v-if="aposta && aposta.jogos && aposta.jogos.length" v-cloak>${aposta.jogos.length}</span>
+        {% endif %}
+    </div>
+    {% if dados.getExibirBilhete() %}
+        <a href="{{ url('bilhete') }}" class="nav-bottom-item{% if controller == 'bilhete' %} active{% endif %}">
+            <i class="fa fa-search"></i>
+            <span>Bilhete</span>
+        </a>
+    {% endif %}
+    {% if user %}
+        <a href="{{ url('financeiro/extrato') }}" class="nav-bottom-item">
+            <i class="fa fa-user"></i>
+            <span>Conta</span>
+        </a>
+    {% elseif dados.getExibirLogin() %}
+        <div class="nav-bottom-item" onclick="$('#modal-login').modal('show');">
+            <i class="fa fa-user"></i>
+            <span>Entrar</span>
+        </div>
+    {% endif %}
+</nav>

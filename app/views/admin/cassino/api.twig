@@ -1,0 +1,146 @@
+{% extends layout %}
+
+{% block main %}
+
+    <div class="row">
+        <!-- Coluna da Esquerda: Formulário de Configuração -->
+        <div class="col-md-7 col-xs-12">
+            <div class="panel panel-white">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title"><i class="fa fa-cogs text-primary"></i> Credenciais da API PG Soft (PGV4)</h4>
+                </div>
+                <div class="panel-body">
+                    <form id="form-api-cassino">
+                        <input type="hidden" name="id" value="{{ settings.id }}">
+
+                        <div class="form-group">
+                            <label class="font-weight-bold">Status do Cassino</label>
+                            <select name="active" class="form-control">
+                                <option value="1" {% if settings.active %}selected{% endif %}>Ativado (Jogos Liberados)</option>
+                                <option value="0" {% if not settings.active %}selected{% endif %}>Pausado (Manutenção)</option>
+                            </select>
+                            <small class="help-block">Quando pausado, exibe aviso aos jogadores informando manutenção.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="font-weight-bold">URL da API do Provedor / Agregador</label>
+                            <input type="url" name="api_url" class="form-control" value="{{ settings.api_url }}" placeholder="https://pg.0um.online" required>
+                            <small class="help-block">Endereço da API PGV4. Caso a API externa esteja offline, o sistema utiliza o motor local integrado.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="font-weight-bold">Agent Token</label>
+                            <input type="text" name="agent_token" class="form-control" value="{{ settings.agent_token }}" placeholder="ex: af0483b0-4bfb-4191-b920-37804a38f53d" required>
+                            <small class="help-block">Token da sua banca fornecido pela API / Agregador.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="font-weight-bold">Secret Key</label>
+                            <div class="input-group">
+                                <input type="password" name="secret_key" id="secret_key" class="form-control" value="{{ settings.secret_key }}" placeholder="ex: ffba5566-f78d-4729-9f11-c03390fc5a48" required>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" onclick="togglePassword()"><i class="fa fa-eye"></i></button>
+                                </span>
+                            </div>
+                            <small class="help-block">Chave secreta para validação dos webhooks de débito e crédito de apostas.</small>
+                        </div>
+
+                        <div class="m-t-20 text-right">
+                            <button type="button" class="btn btn-default" onclick="testarConexao()"><i class="fa fa-plug"></i> Testar Conexão</button>
+                            <button type="submit" class="btn btn-primary font-weight-bold"><i class="fa fa-save"></i> Salvar Configurações</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coluna da Direita: Instruções de Webhook e Informações -->
+        <div class="col-md-5 col-xs-12">
+            <div class="panel panel-white">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="fa fa-exchange text-success"></i> Webhooks & Callbacks</h4>
+                </div>
+                <div class="panel-body">
+                    <p class="text-muted small">
+                        Cadastre estas URLs no painel do seu agregador/provedor PGV4 para que o saldo dos clientes seja debitado nas apostas e creditado nos prêmios em tempo real:
+                    </p>
+
+                    <div class="form-group">
+                        <label class="small font-weight-bold">URL de Callback de Apostas (Game Callback):</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" value="{{ callbackUrl }}" readonly id="cb-url">
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm btn-default" type="button" onclick="copiarTexto('cb-url')"><i class="fa fa-copy"></i></button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="small font-weight-bold">URL de Consulta de Saldo (User Balance):</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" value="{{ balanceUrl }}" readonly id="bal-url">
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm btn-default" type="button" onclick="copiarTexto('bal-url')"><i class="fa fa-copy"></i></button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info small m-t-15 m-b-0">
+                        <i class="fa fa-info-circle"></i> <b>Saldo Integrado:</b> O cassino utiliza a mesma carteira de créditos dos apostadores esportivos. Quando um jogador gira um slot, o valor é debitado na hora e as premiações são creditadas diretamente na conta.
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-white">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="fa fa-folder-open text-warning"></i> Arquivos Locais da API</h4>
+                </div>
+                <div class="panel-body">
+                    <p class="small text-muted">
+                        Pasta instalada no sistema: <code>c:\xampp\htdocs\games\pgv4\</code><br>
+                        Jogos locais disponíveis: <b>45 títulos PG Soft</b> com assets completos, capas e index.html integrados.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        function togglePassword() {
+            var el = $('#secret_key');
+            el.attr('type', el.attr('type') === 'password' ? 'text' : 'password');
+        }
+
+        function copiarTexto(id) {
+            var copyText = document.getElementById(id);
+            copyText.select();
+            document.execCommand("copy");
+            swal({ title: 'Copiado!', text: 'URL copiada para a área de transferência.', type: 'success', timer: 1000, showConfirmButton: false });
+        }
+
+        $('#form-api-cassino').submit(function(e) {
+            e.preventDefault();
+            $.post('admin/cassino/api/salvar', $(this).serialize(), function(res) {
+                if (res.result) {
+                    swal('Sucesso!', res.message, 'success');
+                } else {
+                    swal('Erro', res.message || 'Falha ao salvar.', 'error');
+                }
+            }, 'json');
+        });
+
+        function testarConexao() {
+            swal({ title: 'Testando conexão...', text: 'Enviando requisição de teste para o servidor...', showConfirmButton: false });
+            $.post('admin/cassino/api/testar', {}, function(res) {
+                if (res.result) {
+                    swal('Conexão OK!', res.message, 'success');
+                } else {
+                    swal('Aviso', res.message, 'warning');
+                }
+            }, 'json');
+        }
+    </script>
+{% endblock %}

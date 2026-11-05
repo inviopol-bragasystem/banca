@@ -1,0 +1,1780 @@
+﻿<!doctype html>
+<html lang="pt-br">
+<head><meta charset="UTF-8" /><base href='http://127.0.0.1/' />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+	<link rel="icon" href="favicon.ico" />
+	
+	<title>Esporte Bet Brasil /comissões até 15 %</title>
+	
+	<meta name="title" content="Esporte Bet Brasil /comissões até 15 %" />
+	
+	<meta property="og:title" content="Esporte Bet Brasil /comissões até 15 %" />
+	
+
+	<script src='cdn/js/jquery.min.js' type='text/javascript' ></script>
+
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js" charset="UTF-8" ></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js" charset="UTF-8" ></script>
+	<![endif]-->
+
+
+    <link rel="stylesheet" href="css/bootstrap4.css"/>
+    <link rel="stylesheet" href="css/darkmodern.css?v=3.1.0"/>
+    <link rel="stylesheet" href="css/loading.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/><style>
+    :root {
+        --site-logo-width:180px;
+        --site-logo-height:50px;
+        --site-slide-height:350px;
+        --site-slide-height-mobile:180px;
+    }
+
+    /* Dimensões customizáveis de Logotipo em todos os temas */
+    .brand-logo img, 
+    .mobile-brand img, 
+    .brand-img, 
+    .logo img, 
+    .b365-logo-container img, 
+    .bca-logo-container img, 
+    .btn-logo-container img, 
+    .pri-logo-container img, 
+    .sb-logo-container img, 
+    .dm-logo-container img, 
+    .dp-logo-container img,
+    header img.brand-img,
+    .header img,
+    nav img.brand-img {
+        max-width: var(--site-logo-width) !important;
+        max-height: var(--site-logo-height) !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
+    }
+
+    /* Dimensões customizáveis de Slides e Banners */
+    .owl-slideshow .item,
+    .owl-slideshow img, 
+    .inc-slideshow img, 
+    .carousel-inner img,
+    .carousel-item img,
+    .slideshow img, 
+    .slider-banner img {
+        max-height: var(--site-slide-height) !important;
+        object-fit: cover !important;
+    }
+
+    /* ==========================================================================
+       CONFRONTOS HORIZONTAIS SEM QUEBRA DE LINHA (TEMAS 4 AO 10)
+       Ordem rigorosa: (escudo) Nome do time x (escudo) Nome do time
+       ========================================================================== */
+    /* Garantir que linhas, células e blocos de times nunca quebrem linha */
+    .b365-match-row td, .bca-match-row td, .btn-match-row td, 
+    .pri-match-row td, .sb-match-row td, .dm-match-row td, .dp-match-row td,
+    .b365-table tbody td:first-child, .bca-table tbody td:first-child,
+    .btn-table tbody td:first-child, .pri-table tbody td:first-child,
+    .sb-table tbody td:first-child, .dm-table tbody td:first-child,
+    .dp-table tbody td:first-child {
+        white-space: nowrap !important;
+    }
+
+    .b365-teams, .bca-teams, .btn-teams, 
+    .pri-teams, .sb-teams, .dm-teams, .dp-teams {
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        display: block !important;
+    }
+
+    .b365-times-box, .bca-times-box, .btn-times-box, 
+    .pri-times-box, .sb-times-box, .dm-times-box, .dp-times-box, .leon-times-box {
+        display: inline-flex !important;
+        align-items: center !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+        gap: 6px !important;
+        max-width: 100% !important;
+        vertical-align: middle !important;
+    }
+
+    .b365-time-casa, .b365-time-fora,
+    .bca-time-casa, .bca-time-fora,
+    .btn-time-casa, .btn-time-fora,
+    .pri-time-casa, .pri-time-fora,
+    .sb-time-casa, .sb-time-fora,
+    .dm-time-casa, .dm-time-fora,
+    .dp-time-casa, .dp-time-fora,
+    .leon-time-casa, .leon-time-fora {
+        display: inline-flex !important;
+        align-items: center !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+        gap: 5px !important;
+        flex-shrink: 1 !important;
+        min-width: 0 !important;
+        max-width: 220px !important;
+    }
+
+    .b365-team-name, .bca-team-name, .btn-team-name, 
+    .pri-team-name, .sb-team-name, .dm-team-name, .dp-team-name, .leon-team-name {
+        display: inline-block !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        font-weight: 600 !important;
+        line-height: 1.25 !important;
+    }
+
+    .b365-versus, .bca-versus, .btn-versus, 
+    .pri-versus, .sb-versus, .dm-versus, .dp-versus, .leon-versus {
+        display: inline-block !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        padding: 0 4px !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+    }
+
+    .b365-team-flag, .bca-team-flag, .btn-team-flag, 
+    .pri-team-flag, .sb-team-flag, .dm-team-flag, .dp-team-flag, .leon-team-crest {
+        display: inline-block !important;
+        width: 18px !important;
+        height: 18px !important;
+        min-width: 18px !important;
+        max-width: 18px !important;
+        object-fit: contain !important;
+        flex-shrink: 0 !important;
+        vertical-align: middle !important;
+    }
+
+    /* Modal e Bilhete (Betslip) sem quebra de linha */
+    #modal-cotacoes .modal-body h4,
+    #modal-cotacoes .modal-header + div,
+    #modal-cotacoes .font-weight-bold {
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+    }
+
+    .b365-selection-teams, .bca-selection-teams, .btn-selection-teams,
+    .pri-selection-teams, .sb-selection-teams, .dm-selection-teams, .dp-selection-teams {
+        display: flex !important;
+        align-items: center !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+    }
+
+    .b365-selection-teams span, .bca-selection-teams span, .btn-selection-teams span,
+    .pri-selection-teams span, .sb-selection-teams span, .dm-selection-teams span, .dp-selection-teams span {
+        white-space: nowrap !important;
+    }
+
+    @media (max-width: 768px) {
+        .owl-slideshow .item,
+        .owl-slideshow img, 
+        .inc-slideshow img, 
+        .carousel-inner img,
+        .carousel-item img,
+        .slideshow img, 
+        .slider-banner img {
+            max-height: var(--site-slide-height-mobile) !important;
+        }
+
+        /* ==========================================================================
+           COMPACTAÇÃO MOBILE DE JOGOS E ODDS (TEMAS 4 AO 10)
+           ========================================================================== */
+        /* Seção e Cabeçalho do Campeonato */
+        .b365-league-section, .bca-league-section, .btn-league-section, 
+        .pri-league-section, .sb-league-section, .dm-league-section, .dp-league-section {
+            margin-bottom: 8px !important;
+            border-radius: 6px !important;
+        }
+
+        .b365-league-header, .bca-league-header, .btn-league-header, 
+        .pri-league-header, .sb-league-header, .dm-league-header, .dp-league-header {
+            padding: 6px 10px !important;
+        }
+
+        .b365-league-title, .bca-league-title, .btn-league-title, 
+        .pri-league-title, .sb-league-title, .dm-league-title, .dp-league-title {
+            font-size: 12px !important;
+            gap: 5px !important;
+        }
+
+        /* Tabela de Jogos */
+        .b365-table, .bca-table, .btn-table, 
+        .pri-table, .sb-table, .dm-table, .dp-table {
+            width: 100% !important;
+        }
+
+        .b365-table thead th, .bca-table thead th, .btn-table thead th, 
+        .pri-table thead th, .sb-table thead th, .dm-table thead th, .dp-table thead th {
+            padding: 4px 2px !important;
+            font-size: 9.5px !important;
+            letter-spacing: 0 !important;
+        }
+
+        /* Coluna da PARTIDA (override inline min-width: 220px) */
+        .b365-table thead th:first-child, .b365-table tbody td:first-child,
+        .bca-table thead th:first-child, .bca-table tbody td:first-child,
+        .btn-table thead th:first-child, .btn-table tbody td:first-child,
+        .pri-table thead th:first-child, .pri-table tbody td:first-child,
+        .sb-table thead th:first-child, .sb-table tbody td:first-child,
+        .dm-table thead th:first-child, .dm-table tbody td:first-child,
+        .dp-table thead th:first-child, .dp-table tbody td:first-child {
+            min-width: 0 !important;
+            width: auto !important;
+            padding-left: 6px !important;
+            white-space: nowrap !important;
+        }
+
+        /* Colunas de Cotações Principais */
+        .b365-table thead th:not(:first-child):not(:last-child),
+        .bca-table thead th:not(:first-child):not(:last-child),
+        .btn-table thead th:not(:first-child):not(:last-child),
+        .pri-table thead th:not(:first-child):not(:last-child),
+        .sb-table thead th:not(:first-child):not(:last-child),
+        .dm-table thead th:not(:first-child):not(:last-child),
+        .dp-table thead th:not(:first-child):not(:last-child) {
+            width: 44px !important;
+            min-width: 38px !important;
+            max-width: 46px !important;
+        }
+
+        /* Coluna do Botão MAIS */
+        .b365-table thead th:last-child,
+        .bca-table thead th:last-child,
+        .btn-table thead th:last-child,
+        .pri-table thead th:last-child,
+        .sb-table thead th:last-child,
+        .dm-table thead th:last-child,
+        .dp-table thead th:last-child {
+            width: 34px !important;
+            min-width: 30px !important;
+            max-width: 38px !important;
+        }
+
+        /* Linhas e Células */
+        .b365-match-row td, .bca-match-row td, .btn-match-row td, 
+        .pri-match-row td, .sb-match-row td, .dm-match-row td, .dp-match-row td {
+            padding: 3px 1px !important;
+            white-space: nowrap !important;
+        }
+
+        /* Bloco dos Times Mobile - 100% Horizontal sem quebra */
+        .b365-teams, .bca-teams, .btn-teams, 
+        .pri-teams, .sb-teams, .dm-teams, .dp-teams {
+            padding: 2px 4px !important;
+            overflow: hidden !important;
+            white-space: nowrap !important;
+        }
+
+        .b365-times-box, .bca-times-box, .btn-times-box, 
+        .pri-times-box, .sb-times-box, .dm-times-box, .dp-times-box, .leon-times-box {
+            display: inline-flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            white-space: nowrap !important;
+            align-items: center !important;
+            gap: 3px !important;
+            font-size: 11px !important;
+        }
+
+        .b365-time-casa, .b365-time-fora,
+        .bca-time-casa, .bca-time-fora,
+        .btn-time-casa, .btn-time-fora,
+        .pri-time-casa, .pri-time-fora,
+        .sb-time-casa, .sb-time-fora,
+        .dm-time-casa, .dm-time-fora,
+        .dp-time-casa, .dp-time-fora,
+        .leon-time-casa, .leon-time-fora {
+            display: inline-flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            white-space: nowrap !important;
+            align-items: center !important;
+            gap: 3px !important;
+            max-width: 105px !important;
+            flex-shrink: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .b365-team-name, .bca-team-name, .btn-team-name, 
+        .pri-team-name, .sb-team-name, .dm-team-name, .dp-team-name, .leon-team-name {
+            font-size: 11px !important;
+            line-height: 1.2 !important;
+            font-weight: 600 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            max-width: 85px !important;
+            display: inline-block !important;
+        }
+
+        .b365-team-flag, .bca-team-flag, .btn-team-flag, 
+        .pri-team-flag, .sb-team-flag, .dm-team-flag, .dp-team-flag, .leon-team-crest {
+            width: 15px !important;
+            height: 15px !important;
+            min-width: 15px !important;
+            max-width: 15px !important;
+            display: inline-block !important;
+            flex-shrink: 0 !important;
+        }
+
+        .b365-versus, .bca-versus, .btn-versus, 
+        .pri-versus, .sb-versus, .dm-versus, .dp-versus, .leon-versus {
+            padding: 0 2px !important;
+            font-size: 10px !important;
+            white-space: nowrap !important;
+            display: inline-block !important;
+            flex-shrink: 0 !important;
+        }
+
+        .b365-match-time, .bca-match-time, .btn-match-time, 
+        .pri-match-time, .sb-match-time, .dm-match-time, .dp-match-time {
+            font-size: 9px !important;
+            margin-top: 1px !important;
+            gap: 3px !important;
+        }
+
+        /* Botões de Cotações */
+        .b365-odd-btn, .bca-odd-btn, .btn-odd-btn, 
+        .pri-odd-btn, .sb-odd-btn, .dm-odd-btn, .dp-odd-btn {
+            min-width: 36px !important;
+            width: 100% !important;
+            max-width: 44px !important;
+            padding: 3px 1px !important;
+            margin: 0 auto !important;
+            border-radius: 4px !important;
+        }
+
+        .b365-odd-label, .bca-odd-label, .btn-odd-label, 
+        .pri-odd-label, .sb-odd-label, .dm-odd-label, .dp-odd-label {
+            font-size: 8px !important;
+            margin-bottom: 1px !important;
+            line-height: 1 !important;
+        }
+
+        .b365-odd-val, .bca-odd-val, .btn-odd-val, 
+        .pri-odd-val, .sb-odd-val, .dm-odd-val, .dp-odd-val {
+            font-size: 11px !important;
+            line-height: 1.1 !important;
+            font-weight: 800 !important;
+        }
+
+        /* Botão +Outras Cotações */
+        .b365-more-odds-btn, .bca-more-odds-btn, .btn-more-odds-btn, 
+        .pri-more-odds-btn, .sb-more-odds-btn, .dm-more-odds-btn, .dp-more-odds-btn {
+            min-width: 28px !important;
+            width: 100% !important;
+            max-width: 34px !important;
+            padding: 4px 1px !important;
+            font-size: 10px !important;
+            border-radius: 4px !important;
+        }
+
+        /* Toolbar / Filtros */
+        .b365-toolbar, .bca-toolbar, .btn-toolbar-filter, 
+        .pri-toolbar, .sb-toolbar, .dm-toolbar, .dp-toolbar {
+            padding: 8px 10px !important;
+            margin-bottom: 10px !important;
+        }
+    }</style>
+</head>
+<body>
+<!-- Modal de Login Estilo Leon Bet -->
+<form id="modal-login" class="modal fade" method="post">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="background-color: var(--leon-header); border: 1px solid var(--leon-border); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+            <div class="modal-header" style="border-bottom: 1px solid var(--leon-border); padding: 16px 20px;">
+                <h5 class="modal-title font-weight-bold text-white d-flex align-items-center" style="font-size: 16px;">
+                    <i class="fa fa-lock text-success mr-2" style="color: var(--leon-green) !important;"></i> Acessar Conta
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal" style="opacity: 0.7;">&times;</button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="form-group mb-3">
+                    <label class="small font-weight-bold" style="color: var(--leon-text-muted); letter-spacing: 0.5px;">USUÁRIO OU E-MAIL</label>
+                    <input type="text" name="username" class="form-control" style="background: var(--leon-inner); border-color: var(--leon-border); color: #fff; border-radius: 6px; font-weight: 500;" placeholder="Digite seu usuário" required/>
+                </div>
+                <div class="form-group mb-4">
+                    <label class="small font-weight-bold" style="color: var(--leon-text-muted); letter-spacing: 0.5px;">SENHA</label>
+                    <input type="password" name="password" class="form-control" style="background: var(--leon-inner); border-color: var(--leon-border); color: #fff; border-radius: 6px; font-weight: 500;" placeholder="Digite sua senha" required minlength="5" maxlength="20"/>
+                </div>
+                <button type="submit" class="leon-btn-cadastre w-100 py-2" style="font-size: 14px;">
+                    <i class="fa fa-sign-in mr-1"></i> Entrar
+                </button>                    <div class="text-center mt-3">
+                        <a href="http://127.0.0.1/cadastrar" class="btn btn-link btn-sm" style="color: var(--leon-text-sub);">
+                            Não tem conta? <span style="color: var(--leon-green); font-weight: 700;">Cadastre-se</span>
+                        </a>
+                    </div>            </div>
+        </div>
+    </div>
+</form>
+
+<div id="website"v-cloak>
+
+    <!-- ============================================================
+         HEADER OFICIAL LEON BET (1:1 com leon824.bet)
+         ============================================================ -->
+    <header class="leon-header">
+        <div class="leon-header-top">
+            
+            <!-- Esquerda: Hamburger Mobile + Logo Oficial LEON -->
+            <div class="leon-header-left">
+                <!-- Hamburger Menu Lateral (Desktop & Mobile) -->
+                <button type="button" class="leon-burger-btn" onclick="$('html').toggleClass('show-menu');" aria-label="Menu" title="Menu lateral">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="4" y="16" width="10" height="2" rx="1" fill="#cfd4d8"/>
+                        <rect x="4" y="11" width="16" height="2" rx="1" fill="#cfd4d8"/>
+                        <rect x="4" y="6" width="13" height="2" rx="1" fill="#cfd4d8"/>
+                    </svg>
+                </button>
+
+                <!-- Logo da Banca -->
+                <a href="http://127.0.0.1" class="leon-logo-wrap" title="Esporte Bet Brasil /comissões até 15 %">                        <img src="http://127.0.0.1/imagens/20261007_6ac5c44ccc210.png" alt="Esporte Bet Brasil /comissões até 15 %" style="height: 28px; max-width: 150px; object-fit: contain;"/>                </a>
+
+                <!-- Navegação Superior Desktop -->
+                <ul class="leon-top-tabs d-none d-lg-flex">
+                    <li class="active"><a href="http://127.0.0.1">Início</a></li>
+                    <li><a href="javascript:;" onclick="$('#dpSearchInput').focus();">Ao Vivo</a></li>
+                    <li><a href="http://127.0.0.1">Esportes</a></li>                    <li class="">
+                        <a href="http://127.0.0.1/cassino"><i class="fa fa-gamepad" style="color: #ffb703; margin-right: 4px;"></i> Cassino</a>
+                    </li>                    <li><a href="javascript:;">E-Sports</a></li>
+                </ul>
+            </div>
+
+            <!-- Direita: Busca + Botões Entrar & Cadastre-se -->
+            <div class="leon-header-right">
+                <button type="button" class="leon-search-icon-btn d-none d-md-block" onclick="$('.leon-search-row').slideToggle();" title="Buscar">
+                    <i class="fa fa-search"></i>
+                </button>                        <button type="button" class="leon-btn-entrar" data-toggle="modal" data-target="#modal-login">
+                            Entrar
+                        </button>                        <a href="http://127.0.0.1/cadastrar" class="leon-btn-cadastre">
+                            Cadastre-se
+                        </a>            </div>
+
+        </div>
+    </header>
+
+    <!-- Conteúdo Dinâmico -->
+    <main id="main">    <!-- ============================================================
+         HERO SHOWCASE BANNER (1:1 Oficial leon824.bet "ODDS TURBINADAS")
+         ============================================================ -->
+    <!-- ============================================================
+         HERO SHOWCASE CAROUSEL (JOGOS EM DESTAQUE & BANNERS DO ADMIN)
+         ============================================================ -->
+    <div class="leon-hero-wrapper" v-cloak v-if="heroSlides && heroSlides.length > 0"
+         v-on:mouseenter="pauseHero(true)" v-on:mouseleave="pauseHero(false)">
+        
+        <!-- Slides -->
+        <div v-for="(slide, sIdx) in heroSlides" :key="'hero-slide-' + sIdx"
+             class="leon-hero-slide" v-bind:class="{ active: heroIndex === sIdx }">
+            
+            <!-- Slide de Jogo Esportivo com Odds Turbinadas -->
+            <div v-if="slide.type === 'game'" class="leon-hero-banner">
+                <div class="leon-hero-top-row">
+                    <div>
+                        <span class="leon-hero-tag-futebol">${slide.campeonato ? slide.campeonato.title : 'Futebol'}</span>
+                        
+                        <div class="leon-hero-teams-box" v-on:click="maisCotacoes(slide.jogo)" style="cursor: pointer;" title="Ver todas cotações">
+                            <div class="leon-hero-team-item">
+                                <img v-if="slide.jogo.imgCasa" v-bind:src="slide.jogo.imgCasa" class="leon-hero-crest" v-bind:alt="slide.jogo.casa" onerror="this.style.display='none'"/>
+                                <i v-else class="fa fa-shield" style="font-size: 20px; color: var(--leon-green);"></i>
+                                <span class="leon-hero-team-name">${slide.jogo.casa}</span>
+                            </div>
+                            <div class="leon-hero-team-item">
+                                <img v-if="slide.jogo.imgFora" v-bind:src="slide.jogo.imgFora" class="leon-hero-crest" v-bind:alt="slide.jogo.fora" onerror="this.style.display='none'"/>
+                                <i v-else class="fa fa-shield" style="font-size: 20px; color: var(--leon-green);"></i>
+                                <span class="leon-hero-team-name">${slide.jogo.fora}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contagem Regressiva para o Jogo -->
+                    <div class="leon-countdown-row d-none d-sm-flex">
+                        <div class="leon-countdown-item">
+                            <span class="leon-countdown-val">${getMatchCountdown(slide.jogo).val1}</span>
+                            <span class="leon-countdown-lbl">${getMatchCountdown(slide.jogo).lbl1}</span>
+                        </div>
+                        <span class="leon-countdown-sep">:</span>
+                        <div class="leon-countdown-item">
+                            <span class="leon-countdown-val">${getMatchCountdown(slide.jogo).val2}</span>
+                            <span class="leon-countdown-lbl">${getMatchCountdown(slide.jogo).lbl2}</span>
+                        </div>
+                        <span class="leon-countdown-sep">:</span>
+                        <div class="leon-countdown-item">
+                            <span class="leon-countdown-val">${getMatchCountdown(slide.jogo).val3}</span>
+                            <span class="leon-countdown-lbl">${getMatchCountdown(slide.jogo).lbl3}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Odds Turbinadas da Partida -->
+                <div class="leon-hero-odds-area">
+                    <div class="leon-turbinadas-header">
+                        <i class="fa fa-arrow-up"></i> Odds Turbinadas
+                    </div>
+                    <div class="leon-hero-odds-grid">
+                        <button type="button" 
+                                v-for="c in getCotacoesPrincipais()" 
+                                :key="'hero-' + slide.jogo.id + '-' + c.campo"
+                                class="leon-hero-odd-btn"
+                                v-bind:class="{ active: slide.jogo.apostaEm == '90' + c.campo }"
+                                v-on:click="apostar(slide.jogo, '90', c)">
+                            <span class="leon-hero-odd-type">${(c.campo == 'casa' || c.campo == '1') ? '1' : ((c.campo == 'empate' || c.campo.toLowerCase() == 'x') ? 'X' : '2')}</span>
+                            <span class="leon-hero-odd-val">${(slide.jogo.cotacoes && slide.jogo.cotacoes['90'] && slide.jogo.cotacoes['90'][c.campo]) ? maskReal(slide.jogo.cotacoes['90'][c.campo]) : '-'}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide de Banner Oficial do Admin (Slideshow) -->
+            <a v-else-if="slide.type === 'banner'" 
+               v-bind:href="slide.banner.link || 'javascript:;'" 
+               v-bind:target="slide.banner.target || '_self'" 
+               class="leon-hero-banner-admin">
+                <picture>
+                    <source v-bind:srcset="slide.banner.imgMobile" media="(max-width: 768px)"/>
+                    <img v-bind:src="slide.banner.imgDesktop" v-bind:alt="slide.banner.title || 'Banner Promocional'"/>
+                </picture>
+            </a>
+
+        </div>
+
+        <!-- Botões de Navegação Anterior / Próximo -->
+        <button type="button" class="leon-carousel-arrow prev" v-if="heroSlides.length > 1" v-on:click.stop="prevHeroSlide" aria-label="Anterior">
+            <i class="fa fa-chevron-left"></i>
+        </button>
+        <button type="button" class="leon-carousel-arrow next" v-if="heroSlides.length > 1" v-on:click.stop="nextHeroSlide" aria-label="Próximo">
+            <i class="fa fa-chevron-right"></i>
+        </button>
+
+        <!-- Indicadores de Slide (Dots) -->
+        <div class="leon-carousel-dots" v-if="heroSlides.length > 1">
+            <button type="button" v-for="(slide, dotIdx) in heroSlides" :key="'dot-' + dotIdx"
+                    class="leon-carousel-dot" v-bind:class="{ active: heroIndex === dotIdx }"
+                    v-on:click.stop="setHeroSlide(dotIdx)">
+            </button>
+        </div>
+
+    </div>
+
+    <!-- ============================================================
+         STRIP DE ÍCONES DE CATEGORIAS RÁPIDAS (1:1 Oficial leon824.bet)
+         ============================================================ -->
+    <div class="leon-quick-strip" v-cloak>
+        <div class="leon-quick-card active" v-on:click="setCampeonato()">
+            <span class="leon-quick-icon" style="color: var(--leon-green);"><i class="fa fa-play-circle"></i></span>
+            <span class="leon-quick-name">Ao vivo</span>
+        </div>        <a href="http://127.0.0.1/cassino" class="leon-quick-card" style="text-decoration: none; color: inherit;">
+            <span class="leon-quick-icon" style="color: var(--leon-red);"><i class="fa fa-circle-o-notch"></i></span>
+            <span class="leon-quick-name">Cassino</span>
+        </a>
+        <a href="http://127.0.0.1/cassino" class="leon-quick-card" style="text-decoration: none; color: inherit;">
+            <span class="leon-quick-icon" style="color: #f59e0b;"><i class="fa fa-sun-o"></i></span>
+            <span class="leon-quick-name">Cassino AO...</span>
+        </a>        <div class="leon-quick-card" onclick="swal('Poker', 'Torneios de poker esportivo!', 'info');">
+            <span class="leon-quick-icon" style="color: #3b82f6;"><i class="fa fa-diamond"></i></span>
+            <span class="leon-quick-name">Poker</span>
+        </div>
+        <div class="leon-quick-card">
+            <span class="leon-quick-icon" style="color: #ffffff;"><i class="fa fa-bookmark"></i></span>
+            <span class="leon-quick-name">Playbook</span>
+        </div>
+        <div class="leon-quick-card">
+            <span class="leon-quick-icon" style="color: #06b6d4;"><i class="fa fa-tv"></i></span>
+            <span class="leon-quick-name">V-Sport</span>
+        </div>
+        <div class="leon-quick-card">
+            <span class="leon-quick-icon" style="color: #a855f7;"><i class="fa fa-gamepad"></i></span>
+            <span class="leon-quick-name">e-Sports</span>
+        </div>
+        <div class="leon-quick-card">
+            <span class="leon-quick-icon" style="color: #f59e0b;"><i class="fa fa-rocket"></i></span>
+            <span class="leon-quick-name">Apostas Rápi...</span>
+        </div>
+        <div class="leon-quick-card" onclick="swal('Promoções', 'Confira nossas promoções e bônus especiais!', 'info');">
+            <span class="leon-quick-icon" style="color: #ec4899;"><i class="fa fa-gift"></i></span>
+            <span class="leon-quick-name">Promoções</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         GRID PRINCIPAL LEON BET (Sidebar | Jogos | Cupom)
+         ============================================================ -->
+    <div class="leon-main-wrap" v-cloak>
+        <div class="leon-grid">
+            
+            <!-- COLUNA 1: SIDEBAR DE COMPETIÇÕES (Desktop) -->
+            <aside class="leon-col-left">
+                
+                <!-- Competições Reais Disponíveis -->
+                <div class="leon-sidebar-block">
+                    <div class="leon-sidebar-header">
+                        <span><i class="fa fa-trophy mr-1 text-warning"></i> Competições</span>
+                        <span class="leon-side-badge">${getCampeonatos(null, false).length}</span>
+                    </div>
+                    <div style="max-height: 480px; overflow-y: auto;">
+                        <a href="javascript:;" 
+                           v-on:click="setCampeonato()" 
+                           class="leon-side-item"
+                           v-bind:class="{ active: !findCampeonato || findCampeonato == '*' }">
+                            <span><i class="fa fa-futbol-o mr-2" style="color: var(--leon-green);"></i> Todos os Jogos</span>
+                            <span class="leon-side-badge">${getCampeonatos(null, false).length}</span>
+                        </a>
+                        <a href="javascript:;" 
+                           v-for="c in getCampeonatos(null, false)" 
+                           :key="'side-' + c.id"
+                           v-on:click="setCampeonato(c)" 
+                           class="leon-side-item"
+                           v-bind:class="{ active: findCampeonato == c.id }">
+                            <span class="text-truncate mr-2"><i class="fa fa-angle-right mr-2 text-muted"></i> ${c.title}</span>
+                            <span class="leon-side-badge">${c.jogos ? c.jogos.length : 0}</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Atalhos Extras -->
+                <div class="leon-sidebar-block">
+                    <div class="leon-sidebar-header">
+                        <span>Extras</span>
+                    </div>
+                    <div>
+                        <a href="http://127.0.0.1/bilhete" class="leon-side-item">
+                            <span><i class="fa fa-ticket mr-2 text-info"></i> Consultar Bilhete</span>
+                        </a>                            <a href="http://127.0.0.1/regras" class="leon-side-item">
+                                <span><i class="fa fa-file-text-o mr-2 text-muted"></i> Regulamento</span>
+                            </a>                        <a href="http://127.0.0.1/termos-uso" class="leon-side-item">
+                            <span><i class="fa fa-shield mr-2 text-muted"></i> Jogo Responsável</span>
+                        </a>
+                    </div>
+                </div>
+
+            </aside>
+
+            <!-- COLUNA 2: JOGOS E MERCADOS (Centro) -->
+            <section class="leon-col-center">
+
+                <!-- Filtro de Datas em Chips (Hoje, Amanhã, etc.) -->
+                <div class="leon-date-chips-row">
+                    <button type="button" 
+                            class="leon-day-chip" 
+                            v-bind:class="{ active: findData == '2026-10-08' }" 
+                            v-on:click="setData('2026-10-08')">
+                        Hoje (08/10/2026)
+                    </button>
+                    <button type="button" 
+                            class="leon-day-chip" 
+                            v-bind:class="{ active: findData == '2026-10-09' }" 
+                            v-on:click="setData('2026-10-09')">
+                        Amanhã (09/10/2026)
+                    </button>
+                    <button type="button" 
+                            v-for="d in datas" 
+                            :key="d.data"
+                            v-if="d.data != '2026-10-08' && d.data != '2026-10-09'"
+                            class="leon-day-chip" 
+                            v-bind:class="{ active: findData == d.data }" 
+                            v-on:click="setData(d.data)">
+                        ${d.data.split('-').reverse().join('/')}
+                    </button>
+                    <button type="button" 
+                            class="leon-day-chip" 
+                            v-bind:class="{ active: !findData || findData == '*' }" 
+                            v-on:click="setData(null)">
+                        Todas as Datas
+                    </button>
+                </div>
+
+                <!-- Título da Seção: Futebol ⌃ + Dropdown Vencedor ⬍ -->
+                <div class="leon-section-bar">
+                    <div class="leon-section-title-wrap" onclick="$('.leon-league-card').slideToggle();">
+                        <span>⚽ Futebol</span>
+                        <i class="fa fa-angle-down"></i>
+                    </div>
+
+                    <div class="leon-market-dropdown">
+                        <span>Vencedor</span>
+                        <i class="fa fa-sort"></i>
+                    </div>
+                </div>
+
+                <!-- Campo de Pesquisa Rápida -->
+                <div class="leon-search-row mb-3" style="display: none;">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="background: var(--leon-inner); border-color: var(--leon-border); color: var(--leon-green);"><i class="fa fa-search"></i></span>
+                        </div>
+                        <input type="text" id="dpSearchInput" v-model="search" class="form-control" style="background: var(--leon-inner); border-color: var(--leon-border); color: #fff;" placeholder="Buscar clube, seleção ou torneio..."/>
+                    </div>
+                </div>
+
+                <!-- Lista de Partidas por Liga (Layout 1:1 Leon Bet) -->
+                <div>
+                    <div v-if="getCampeonatos().length == 0" class="text-center py-5 text-muted">
+                        <i class="fa fa-futbol-o fa-3x mb-3 text-secondary"></i>
+                        <p class="font-weight-bold">Nenhum jogo disponível para esta seleção.</p>
+                    </div>
+
+                    <div v-for="campeonato in getCampeonatos(null, true)" :key="campeonato.id" class="leon-league-card">
+                        
+                        <!-- Cabeçalho da Liga -->
+                        <div class="leon-league-header">
+                            <div class="leon-league-title-box">
+                                <img v-if="campeonato.paisImg" v-bind:src="campeonato.paisImg" class="leon-league-flag" onerror="this.style.display='none'"/>
+                                <i v-else class="fa fa-globe text-muted mr-1"></i>
+                                <span class="leon-league-name">${campeonato.title}</span>
+                            </div>
+                            <div class="leon-league-odds-header">
+                                <span>1</span>
+                                <span>X</span>
+                                <span>2</span>
+                            </div>
+                        </div>
+
+                        <!-- Lista de Partidas da Liga -->
+                        <div class="leon-matches-container">
+                            <div v-for="jogo in getJogos(campeonato)" :key="jogo.id" class="leon-match-row">
+                                
+                                <!-- Informações do Jogo (Times + Data/Hora) -->
+                                <div class="leon-match-info" v-on:click="maisCotacoes(jogo)">
+                                    <div class="leon-times-box text-nowrap" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; white-space: nowrap !important; align-items: center !important;">
+                                        <span class="leon-time-casa text-nowrap" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; white-space: nowrap !important; align-items: center !important;">
+                                            <img v-if="jogo.imgCasa" v-bind:src="jogo.imgCasa" class="leon-team-crest mr-1" v-bind:alt="jogo.casa" loading="lazy" onerror="this.style.display='none'"/>
+                                            <i v-else class="fa fa-shield mr-1" style="color: #64748b; font-size: 13px;"></i>
+                                            <span class="leon-team-name text-nowrap" style="white-space: nowrap !important;">${jogo.casa}</span>
+                                        </span>
+                                        <span class="leon-versus" style="white-space: nowrap !important; display: inline-block !important; padding: 0 5px; font-weight: 700; color: #94a3b8; font-size: 12px;">x</span>
+                                        <span class="leon-time-fora text-nowrap" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; white-space: nowrap !important; align-items: center !important;">
+                                            <img v-if="jogo.imgFora" v-bind:src="jogo.imgFora" class="leon-team-crest mr-1" v-bind:alt="jogo.fora" loading="lazy" onerror="this.style.display='none'"/>
+                                            <i v-else class="fa fa-shield mr-1" style="color: #64748b; font-size: 13px;"></i>
+                                            <span class="leon-team-name text-nowrap" style="white-space: nowrap !important;">${jogo.fora}</span>
+                                        </span>
+                                    </div>
+                                    <div class="leon-match-meta">
+                                        <span>Hoje ${jogo.hora.replace(/:00$/, '')}</span>
+                                        <span>•</span>
+                                        <span class="leon-more-markets-tag">+${Math.max(0, totalCotacoes(jogo.cotacoes) - getCotacoesPrincipais().length)}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Botões de Cotações 1, X, 2 -->
+                                <div class="leon-odds-group">
+                                    <div class="leon-odds-buttons">
+                                        <button type="button" 
+                                                v-for="c in getCotacoesPrincipais()" 
+                                                :key="c.campo"
+                                                class="leon-odd-btn"
+                                                v-bind:class="{ active: jogo.apostaEm == '90' + c.campo }"
+                                                v-on:click="apostar(jogo, '90', c)">
+                                            <span class="leon-odd-val">${(jogo.cotacoes && jogo.cotacoes['90'] && jogo.cotacoes['90'][c.campo]) ? maskReal(jogo.cotacoes['90'][c.campo]) : '-'}</span>
+                                        </button>
+                                    </div>
+                                    <div class="leon-turbinada-badge" v-if="jogo.cotacoes && Math.random() > 0.4">
+                                        <i class="fa fa-arrow-up"></i> Odds Turbinadas
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- COLUNA 3: BOLETIM DE APOSTAS (Desktop) -->
+            <aside class="leon-col-right">    <div class="leon-betslip-card">
+        
+        <!-- Header Oficial Leon Bet: BOLETIM -->
+        <div class="leon-betslip-header">
+            <span class="leon-betslip-title">BOLETIM</span>
+            <span class="leon-betslip-badge">${aposta.jogos.length}</span>
+        </div>
+
+        <!-- Conteúdo do Cupom -->
+        <div class="leon-betslip-body">
+            
+            <!-- Lista de Seleções -->
+            <div v-if="aposta.jogos.length > 0">
+                <div v-for="(v, i) in aposta.jogos" :key="i" class="leon-bet-card">
+                    <div class="leon-bet-card-top">
+                        <span class="leon-bet-teams">${v.jogo.casa} x ${v.jogo.fora}</span>
+                        <button type="button" class="leon-bet-remove" v-on:click="rmAposta(i)" title="Remover seleção">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="leon-bet-card-bottom">
+                        <span class="leon-bet-market">
+                            <b>${v.cotacao.sigla || v.cotacao.title}</b>
+                            <span class="badge badge-secondary ml-1" v-if="v.tempo != '90'">
+                                ${v.tempo == 'pt' ? '1ºT' : '2ºT'}
+                            </span>
+                        </span>
+                        <span class="leon-bet-odd">
+                            ${(v && v.jogo && v.jogo.cotacoes && v.jogo.cotacoes[v.tempo] && v.cotacao && v.jogo.cotacoes[v.tempo][v.cotacao.campo]) ? maskReal(v.jogo.cotacoes[v.tempo][v.cotacao.campo]) : '-'}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cupom Vazio -->
+            <div v-else class="leon-empty-betslip">
+                <i class="fa fa-ticket"></i>
+                <div style="font-weight: 700; color: #fff; margin-bottom: 4px;">Seu boletim está vazio</div>
+                <div class="small">Selecione as cotações dos jogos para adicionar apostas.</div>
+            </div>
+
+        </div>
+
+        <!-- Resumo Financeiro & Ação -->
+        <div class="leon-betslip-footer">
+            <div class="leon-summary-line">
+                <span>Cotação Total:</span>
+                <b class="text-white">${valorCotacao || '-'}</b>
+            </div>
+
+            <!-- Input de Valor da Aposta -->
+            <div class="leon-stake-input-wrap">
+                <span class="leon-stake-prefix">R$</span>
+                <input type="number" 
+                       v-model="valorAposta" 
+                       v-bind:min="apostaMinima" 
+                       v-bind:max="apostaMaxima" 
+                       step="1.00" 
+                       class="leon-stake-input" 
+                       placeholder="Valor"/>
+            </div>
+
+            <div class="leon-summary-line total-return">
+                <span>Possível Retorno:</span>
+                <span class="val">R$ ${premio || '0,00'}</span>
+            </div>
+
+            <button type="button" 
+                    class="leon-btn-apostar" 
+                    v-bind:disabled="!apostaValida" 
+                    v-on:click="finalizarAposta">Criar Pré-bilhete
+            </button>
+        </div>
+
+    </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MODAL / BOTTOM SHEET DO BOLETIM (Mobile)
+         ============================================================ -->
+    <div class="leon-mobile-betslip-modal d-lg-none" id="leonMobileBetslipModal" v-cloak>
+        <div class="leon-mobile-betslip-sheet">
+            <div class="leon-mobile-betslip-top">
+                <span class="leon-betslip-title">BOLETIM DE APOSTAS</span>
+                <button type="button" class="close text-white" onclick="$('#leonMobileBetslipModal').removeClass('open');" style="font-size: 24px;">&times;</button>
+            </div>
+            <div>    <div class="leon-betslip-card">
+        
+        <!-- Header Oficial Leon Bet: BOLETIM -->
+        <div class="leon-betslip-header">
+            <span class="leon-betslip-title">BOLETIM</span>
+            <span class="leon-betslip-badge">${aposta.jogos.length}</span>
+        </div>
+
+        <!-- Conteúdo do Cupom -->
+        <div class="leon-betslip-body">
+            
+            <!-- Lista de Seleções -->
+            <div v-if="aposta.jogos.length > 0">
+                <div v-for="(v, i) in aposta.jogos" :key="i" class="leon-bet-card">
+                    <div class="leon-bet-card-top">
+                        <span class="leon-bet-teams">${v.jogo.casa} x ${v.jogo.fora}</span>
+                        <button type="button" class="leon-bet-remove" v-on:click="rmAposta(i)" title="Remover seleção">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="leon-bet-card-bottom">
+                        <span class="leon-bet-market">
+                            <b>${v.cotacao.sigla || v.cotacao.title}</b>
+                            <span class="badge badge-secondary ml-1" v-if="v.tempo != '90'">
+                                ${v.tempo == 'pt' ? '1ºT' : '2ºT'}
+                            </span>
+                        </span>
+                        <span class="leon-bet-odd">
+                            ${(v && v.jogo && v.jogo.cotacoes && v.jogo.cotacoes[v.tempo] && v.cotacao && v.jogo.cotacoes[v.tempo][v.cotacao.campo]) ? maskReal(v.jogo.cotacoes[v.tempo][v.cotacao.campo]) : '-'}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cupom Vazio -->
+            <div v-else class="leon-empty-betslip">
+                <i class="fa fa-ticket"></i>
+                <div style="font-weight: 700; color: #fff; margin-bottom: 4px;">Seu boletim está vazio</div>
+                <div class="small">Selecione as cotações dos jogos para adicionar apostas.</div>
+            </div>
+
+        </div>
+
+        <!-- Resumo Financeiro & Ação -->
+        <div class="leon-betslip-footer">
+            <div class="leon-summary-line">
+                <span>Cotação Total:</span>
+                <b class="text-white">${valorCotacao || '-'}</b>
+            </div>
+
+            <!-- Input de Valor da Aposta -->
+            <div class="leon-stake-input-wrap">
+                <span class="leon-stake-prefix">R$</span>
+                <input type="number" 
+                       v-model="valorAposta" 
+                       v-bind:min="apostaMinima" 
+                       v-bind:max="apostaMaxima" 
+                       step="1.00" 
+                       class="leon-stake-input" 
+                       placeholder="Valor"/>
+            </div>
+
+            <div class="leon-summary-line total-return">
+                <span>Possível Retorno:</span>
+                <span class="val">R$ ${premio || '0,00'}</span>
+            </div>
+
+            <button type="button" 
+                    class="leon-btn-apostar" 
+                    v-bind:disabled="!apostaValida" 
+                    v-on:click="finalizarAposta">Criar Pré-bilhete
+            </button>
+        </div>
+
+    </div>
+            </div>
+        </div>
+    </div>    <!-- Modal Mais Cotações Estilo Leon Bet -->
+    <div class="modal fade" id="modal-cotacoes" tabindex="-1" role="dialog" aria-hidden="true" v-cloak>
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-color: var(--leon-header); border: 1px solid var(--leon-border); border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.8);" v-if="mJogo && mJogo.jogo">
+                
+                <!-- Header do Modal -->
+                <div class="modal-header" style="background: #141719; border-bottom: 1px solid var(--leon-border); padding: 14px 20px;">
+                    <div>
+                        <div class="font-weight-bold text-white d-flex align-items-center" style="font-size: 16px;">
+                            <img v-if="mJogo.jogo.imgCasa" :src="mJogo.jogo.imgCasa" class="leon-team-crest mr-1" onerror="this.style.display='none'"/>
+                            <i v-else class="fa fa-shield mr-1" style="color: #64748b; font-size: 14px;"></i>
+                            <span>${mJogo.jogo.casa}</span>
+                            <span class="mx-2 text-muted font-weight-bold">x</span>
+                            <img v-if="mJogo.jogo.imgFora" :src="mJogo.jogo.imgFora" class="leon-team-crest mr-1" onerror="this.style.display='none'"/>
+                            <i v-else class="fa fa-shield mr-1" style="color: #64748b; font-size: 14px;"></i>
+                            <span>${mJogo.jogo.fora}</span>
+                        </div>
+                        <div class="small text-muted mt-1">
+                            <i class="fa fa-clock-o mr-1"></i> ${mJogo.jogo.data.split('-').reverse().join('/')} às ${mJogo.jogo.hora.replace(/:00$/, '')}
+                        </div>
+                    </div>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar" style="opacity: 0.7;">&times;</button>
+                </div>
+
+                <!-- Tabs de Tempo (Jogo Completo / 1º Tempo / 2º Tempo) -->
+                <div style="background: var(--leon-inner); padding: 8px 16px; border-bottom: 1px solid var(--leon-border); display: flex; gap: 8px;">
+                    <button type="button" 
+                            class="leon-day-chip" 
+                            v-bind:class="{ active: mJogo.tempo == 90 }" 
+                            v-on:click="mJogo.tempo = 90">
+                        Jogo Completo
+                    </button>
+                    <button type="button" 
+                            class="leon-day-chip" 
+                            v-bind:class="{ active: mJogo.tempo == 'pt' }" 
+                            v-on:click="mJogo.tempo = 'pt'">
+                        1º Tempo
+                    </button>
+                    <button type="button" 
+                            class="leon-day-chip" 
+                            v-bind:class="{ active: mJogo.tempo == 'st' }" 
+                            v-on:click="mJogo.tempo = 'st'">
+                        2º Tempo
+                    </button>
+                </div>
+
+                <!-- Mercados Agrupados -->
+                <div class="modal-body p-3" style="max-height: 65vh; overflow-y: auto;">
+                    <div v-for="grupo in cotacoesGrupos" :key="grupo.id" class="mb-3" v-if="getCotacoesByGrupo(grupo, mJogo.tempo).length > 0">
+                        <div class="font-weight-bold text-white small text-uppercase mb-2" style="letter-spacing: 0.5px; color: var(--leon-green) !important;">
+                            ${grupo.title}
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px;">
+                            <div v-for="c in getCotacoesByGrupo(grupo, mJogo.tempo)" 
+                                 :key="c.campo"
+                                 class="leon-odd-btn py-2 px-2"
+                                 style="height: auto; min-height: 44px;"
+                                 v-bind:class="{ active: mJogo.jogo.apostaEm == mJogo.tempo + c.campo }"
+                                 v-on:click="apostar(mJogo.jogo, mJogo.tempo, c)">
+                                <div class="small" style="color: var(--leon-text-muted); font-size: 11px;">${c.title}</div>
+                                <div class="leon-odd-val mt-1">${maskReal(mJogo.jogo.cotacoes[mJogo.tempo][c.campo])}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>    </main>
+
+    <!-- ============================================================
+         FOOTER OFICIAL LEON BET
+         ============================================================ -->
+    <footer class="leon-footer">
+        <div class="leon-footer-wrap">
+            <div class="leon-footer-links">
+                <a href="http://127.0.0.1/termos-uso">Termos de Uso</a><a href="http://127.0.0.1/regras">Regras de Apostas</a><a href="http://127.0.0.1/cotacoes">Tabela de Cotações</a><a href="http://127.0.0.1/bilhete">Consultar Bilhete</a><a href="/apk" target="_blank">Baixar App Android</a>            </div>
+
+            <div class="d-flex align-items-center justify-content-between flex-wrap" style="gap: 12px;">
+                <div class="small" style="color: var(--leon-text-muted);">
+                    <span class="leon-18-badge">18+</span>
+                    Plataforma de apostas esportivas e entretenimento. Jogue com responsabilidade.
+                </div>
+                <div class="small" style="color: var(--leon-text-muted);">
+                    ©2026 <b>Esporte Bet Brasil /comissões até 15 %</b>. Todos os direitos reservados.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<!-- ============================================================
+     DRAWER OFFCANVAS MOBILE
+     ============================================================ -->
+<div class="leon-drawer-overlay" onclick="$('html').removeClass('show-menu');"></div>
+<div class="leon-drawer">
+    <div class="leon-drawer-header">
+        <a href="http://127.0.0.1" style="display: inline-flex; align-items: center; text-decoration: none;">                <img src="http://127.0.0.1/imagens/20261007_6ac5c44ccc210.png" alt="Esporte Bet Brasil /comissões até 15 %" style="height: 26px; max-width: 140px; object-fit: contain;"/>        </a>
+        <button type="button" class="close text-white" onclick="$('html').removeClass('show-menu');" aria-label="Fechar" style="font-size: 24px; opacity: 0.85; line-height: 1; padding: 4px 8px;">&times;</button>
+    </div>
+    <div class="leon-drawer-body">
+        <a href="http://127.0.0.1" class="leon-drawer-item" onclick="$('html').removeClass('show-menu');">
+            <i class="fa fa-futbol-o" style="color: var(--leon-green);"></i> Esportes
+        </a>
+        <a href="javascript:;" class="leon-drawer-item" onclick="$('html').removeClass('show-menu');">
+            <i class="fa fa-play-circle" style="color: var(--leon-green);"></i> Ao Vivo
+        </a>        <a href="http://127.0.0.1/cassino" class="leon-drawer-item" onclick="$('html').removeClass('show-menu');">
+            <i class="fa fa-gamepad text-warning"></i> Cassino
+        </a>            <a href="http://127.0.0.1/bilhete" class="leon-drawer-item" onclick="$('html').removeClass('show-menu');">
+                <i class="fa fa-ticket text-info"></i> Consultar Bilhete
+            </a>            <a href="http://127.0.0.1/regras" class="leon-drawer-item" onclick="$('html').removeClass('show-menu');">
+                <i class="fa fa-book text-muted"></i> Regulamento
+            </a>        <a href="http://127.0.0.1/termos-uso" class="leon-drawer-item" onclick="$('html').removeClass('show-menu');">
+            <i class="fa fa-file-text-o text-muted"></i> Termos de Uso
+        </a>
+
+        <div style="border-top: 1px solid var(--leon-border); margin: 8px 0;"></div>                <a href="#modal-login" data-toggle="modal" class="leon-drawer-item" onclick="$('html').removeClass('show-menu');">
+                    <i class="fa fa-sign-in" style="color: var(--leon-green);"></i> Entrar na Conta
+                </a>                <a href="http://127.0.0.1/cadastrar" class="leon-drawer-item" style="color: var(--leon-green); font-weight: 700;" onclick="$('html').removeClass('show-menu');">
+                    <i class="fa fa-user-plus"></i> Criar Nova Conta
+                </a>    </div>
+</div>
+
+<!-- ============================================================
+     MOBILE BOTTOM NAVIGATION (1:1 com Leon Bet)
+     ============================================================ -->
+<nav class="leon-bottom-nav">
+    <a href="http://127.0.0.1" class="leon-bottom-item active">
+        <i class="fa fa-futbol-o"></i>
+        <span>Esportes</span>
+    </a>    <a href="http://127.0.0.1/cassino" class="leon-bottom-item">
+        <i class="fa fa-gamepad"></i>
+        <span>Cassino</span>
+    </a>    <a href="javascript:;" class="leon-bottom-item" onclick="$('#leonMobileBetslipModal').addClass('open');">
+        <i class="fa fa-ticket"></i>
+        <span class="leon-bottom-badge" id="leonMobileBadge" style="display: none;">0</span>
+        <span>Boletim</span>
+    </a>
+    <a href="javascript:;" class="leon-bottom-item" onclick="swal('Bônus', 'Consulte os bônus com o administrador!', 'info');">
+        <i class="fa fa-gift"></i>
+        <span>Bônus</span>
+    </a>        <a href="#modal-login" data-toggle="modal" class="leon-bottom-item">
+            <i class="fa fa-user-circle-o"></i>
+            <span>Entrar</span>
+        </a></nav>
+	<!-- JavaScript -->
+	<script type='text/javascript' >
+		var URL_APP = 'http://127.0.0.1';
+		var URL_MODULE = 'http://127.0.0.1';
+		var CONTROLLER = 'apostar';
+		var ACTION = 'index';
+		var MODULE = 'site';
+		var MODULE_DEFAULT = 'site';
+		var PAGE_VARS = '[]';
+		const IS_LOCAL = 1;
+	</script>
+	
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="node_modules/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="cdn/js/jquery.mask.js"></script>
+<script type="text/javascript" src="cdn/js/jquery.form.js"></script>
+<script type="text/javascript" src="cdn/js/jquery.serializeObject.js"></script>
+<script type="text/javascript" src="cdn/js/fastclick.js"></script>
+<script type="text/javascript" src="cdn/js/modernizr.min.js"></script>
+<script type="text/javascript" src="cdn/js/mask.js"></script>
+<script type="text/javascript" src="cdn/js/string.js"></script>
+<script type="text/javascript" src="node_modules/owl.carousel2/dist/owl.carousel.js"></script>
+<script type="text/javascript" src="cdn/js/clipboard.min.js"></script>
+<script type="text/javascript" src="cdn/js/admin.js"></script>
+<script type="text/javascript" src="js/site.js?v=1.0.0"></script>
+
+<script>
+    $('#modal-login')
+        .adminPage({
+            autoSearch: false,
+            controller: 'login',
+            module: 'entrar',
+        })
+        .on("success", function (event, e) {
+            if (e.result == 1) {
+                window.location.href = e.url;
+            }
+        });
+</script>
+    <script src="node_modules/vue/dist/vue.min.js"></script>
+    <script src="node_modules/axios/dist/axios.js"></script>
+    <script src="node_modules/lodash/lodash.min.js"></script>
+    <script type="text/javascript">
+
+        var app = new Vue({
+            el: '#website',
+            delimiters: ['${', '}'],
+            created() {
+
+                $('html').addClass('loading');
+
+                // Relógio reativo: a cada 15s reavalia os jogos (apenas os jogos que fecharam saem da tela e do cupom)
+                setInterval(() => {
+                    this.agora = Date.now();
+                    for (var k = this.aposta.jogos.length - 1; k >= 0; k--) {
+                        var item = this.aposta.jogos[k];
+                        if (item && item.jogo && !this.jogoAberto(item.jogo)) {
+                            item.jogo.apostaEm = null;
+                            item.jogo.outras = false;
+                            this.aposta.jogos.splice(k, 1);
+                        }
+                    }
+                }, 15000);
+
+                // Carrossel do Hero Showcase: rotação automática a cada 5 segundos
+                setInterval(() => {
+                    if (!this.heroPaused && this.heroSlides && this.heroSlides.length > 1) {
+                        this.heroIndex = (this.heroIndex + 1) % this.heroSlides.length;
+                    }
+                }, 5000);
+
+                for (var i = this.aposta.jogos.length - 1; i >= 0; i--) {
+                    var item = this.aposta.jogos[i];
+                    if (item && item.jogo && !this.jogoAberto(item.jogo)) {
+                        item.jogo.apostaEm = null;
+                        item.jogo.outras = false;
+                        this.aposta.jogos.splice(i, 1);
+                    }
+                }
+
+                axios
+                    .get(url('apostar/jogos'))
+                    .then((response) => {
+                        this.grupos = response.data.grupos;
+                        this.cotacoes = response.data.cotacoes;
+                        this.paises = response.data.paises;
+                        this.datas = response.data.datas;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                    .then(() => {
+                        $('html').removeClass('loading');
+                        $(window).resize();
+                    });
+
+            },
+            data() {
+                return {
+                    valorAposta:2,
+                    agora: Date.now(),
+                    findCampeonato: '*',
+                    search: '',
+                    findData: null,
+                    findPais: '*',
+                    tempos: {90: 'Jogo completo', pt: 'Primeiro tempo', st: 'Segundo tempo'},
+                    cliente: '',
+                    telefone: '',
+                    revendedor: '',
+                    grupos: {},
+                    auth: {
+                        username: '',
+                        password: '',
+                    },
+                    datas: {},
+                    mJogo: {
+                        jogo: null,
+                        tempo: 90,
+                    },
+                    cotacoes: [],
+                    paises: [],
+                    aposta: {
+                        jogos: [],
+                    },
+                    cotacaoMaxima:10000000,
+                    cotacaoMinima:2.5,
+                    condicaoCotacao:[{"min":2,"max":20,"cotacao":2.5},{"min":21,"max":100,"cotacao":30},{"min":101,"max":200,"cotacao":40},{"min":201,"max":300,"cotacao":60},{"min":301,"max":400,"cotacao":100}],
+                    apostaMinima:2,
+                    apostaMaxima:100000,
+                    retornoMaximo:5000,
+                    minJogos:1,
+                    heroIndex: 0,
+                    heroPaused: false,
+                    adminBanners:[{"id":18,"title":"Super B\u00f4nus e Giros Gr\u00e1tis","link":null,"target":"_self","imgDesktop":"http:\/\/127.0.0.1\/imagens\/20261007_6ac5c44d431d8.png","imgMobile":"http:\/\/127.0.0.1\/imagens\/20261007_6ac5c44d431d8.png"},{"id":17,"title":"B\u00f4nus de Boas-Vindas 100%","link":null,"target":"_self","imgDesktop":"http:\/\/127.0.0.1\/imagens\/20261006_6ac566f35eb76.jpg","imgMobile":"http:\/\/127.0.0.1\/imagens\/20261006_6ac566f363464.jpg"}],
+                };
+            },
+            filters: {
+                maskReal(value) {
+                    if (!value) return '0,00';
+                    var n = parseFloat(value);
+                    if (isNaN(n) || n <= 0) return '0,00';
+                    return n.toFixed(2).replace('.', ',');
+                }
+            },
+            computed: {
+                cotacoesGrupos() {
+                    var arr = [];
+                    if (this.grupos) {
+                        Object.keys(this.grupos).forEach((k) => {
+                            arr.push({ id: k, title: this.grupos[k] });
+                        });
+                    }
+                    return arr;
+                },
+                cotacao() {
+                    return this.getCotacao();
+                },
+                premio() {
+                    return this.getPremio().toString().toReal();
+                },
+                premioRevenda() {
+                    return (this.getPremio() * (100 -0) / 100).toString().toReal();
+                },
+                valorCotacao() {
+                    return this.getCotacao().toString().toReal();
+                },
+                apostaValida() {
+                    if (this.aposta.jogos.length >= this.minJogos) {
+                        if (this.getCotacao() >= this.getCotacaoMinima()) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                featuredHeroGames() {
+                    var games = [];
+                    var comps = this.getCampeonatos();
+                    if (comps && comps.length) {
+                        for (var c = 0; c < comps.length; c++) {
+                            var jgs = this.getJogos(comps[c]);
+                            if (jgs && jgs.length) {
+                                for (var j = 0; j < jgs.length; j++) {
+                                    games.push({
+                                        jogo: jgs[j],
+                                        campeonato: comps[c]
+                                    });
+                                    if (games.length >= 4) break;
+                                }
+                            }
+                            if (games.length >= 4) break;
+                        }
+                    }
+                    return games;
+                },
+                heroSlides() {
+                    var slides = [];
+                    var games = this.featuredHeroGames || [];
+                    var banners = this.adminBanners || [];
+                    
+                    if (games.length > 0 && banners.length > 0) {
+                        for (var i = 0; i < games.length; i++) {
+                            slides.push({
+                                type: 'game',
+                                jogo: games[i].jogo,
+                                campeonato: games[i].campeonato
+                            });
+                            var bIdx = i % banners.length;
+                            slides.push({
+                                type: 'banner',
+                                banner: banners[bIdx]
+                            });
+                        }
+                    } else if (games.length > 0) {
+                        for (var g = 0; g < games.length; g++) {
+                            slides.push({
+                                type: 'game',
+                                jogo: games[g].jogo,
+                                campeonato: games[g].campeonato
+                            });
+                        }
+                    } else if (banners.length > 0) {
+                        for (var b = 0; b < banners.length; b++) {
+                            slides.push({
+                                type: 'banner',
+                                banner: banners[b]
+                            });
+                        }
+                    }
+                    return slides;
+                },
+            },
+            methods: {
+                prevHeroSlide() {
+                    var total = (this.heroSlides || []).length;
+                    if (total > 0) {
+                        this.heroIndex = (this.heroIndex - 1 + total) % total;
+                    }
+                },
+                nextHeroSlide() {
+                    var total = (this.heroSlides || []).length;
+                    if (total > 0) {
+                        this.heroIndex = (this.heroIndex + 1) % total;
+                    }
+                },
+                setHeroSlide(idx) {
+                    this.heroIndex = idx;
+                },
+                pauseHero(val) {
+                    this.heroPaused = val;
+                },
+                getMatchCountdown(jogo) {
+                    if (!jogo) return { val1: '00', lbl1: 'Dias', val2: '00', lbl2: 'Horas', val3: '00', lbl3: 'Min' };
+                    try {
+                        var dtJogo = null;
+                        if (jogo.dateTime) {
+                            dtJogo = new Date(jogo.dateTime);
+                        } else if (jogo.data && jogo.hora) {
+                            var pData = jogo.data.split('-');
+                            var pHora = jogo.hora.split(':');
+                            dtJogo = new Date(pData[0], pData[1] - 1, pData[2], pHora[0], pHora[1], pHora[2] || 0);
+                        }
+                        if (!dtJogo || isNaN(dtJogo.getTime())) {
+                            return { val1: '00', lbl1: 'Dias', val2: '00', lbl2: 'Horas', val3: '00', lbl3: 'Min' };
+                        }
+                        var diff = dtJogo.getTime() - this.agora;
+                        if (diff <= 0) {
+                            return { val1: 'AO', lbl1: 'VIVO', val2: 'EM', lbl2: 'JOGO', val3: '90\'', lbl3: 'Min' };
+                        }
+                        var totalMin = Math.floor(diff / (1000 * 60));
+                        var dias = Math.floor(totalMin / (60 * 24));
+                        var horas = Math.floor((totalMin % (60 * 24)) / 60);
+                        var mins = totalMin % 60;
+                        var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
+                        return {
+                            val1: pad(dias), lbl1: 'Dias',
+                            val2: pad(horas), lbl2: 'Horas',
+                            val3: pad(mins), lbl3: 'Min'
+                        };
+                    } catch(e) {
+                        return { val1: '00', lbl1: 'Dias', val2: '00', lbl2: 'Horas', val3: '00', lbl3: 'Min' };
+                    }
+                },
+                maskReal(value) {
+                    if (!value) return '0,00';
+                    var n = parseFloat(value);
+                    if (isNaN(n) || n <= 0) return '0,00';
+                    return n.toFixed(2).replace('.', ',');
+                },
+                onAuth() {
+                    $("html").addClass('page-loading');
+                    axios
+                        .post('entrar/login/insert', this.auth)
+                        .then((response) => {
+                            if (response.data.result == 1) {
+                                window.location.reload();
+                            } else {
+                                $('html').removeClass('page-loading');
+                                window.alert(response.data.message);
+                            }
+                        })
+                        .catch((err) => {
+                            alert('Não foi possível acessar');
+                            $('html').removeClass('page-loading');
+                        });
+                },
+                getCotacao() {
+                    var cotacao = 1;
+                    if (this.aposta && Array.isArray(this.aposta.jogos)) {
+                        this.aposta.jogos.forEach((v) => {
+                            if (v && v.jogo && v.jogo.cotacoes && v.jogo.cotacoes[v.tempo] && v.cotacao && v.cotacao.campo) {
+                                var val = parseFloat(v.jogo.cotacoes[v.tempo][v.cotacao.campo]);
+                                if (!isNaN(val) && val > 0) {
+                                    cotacao *= val;
+                                }
+                            }
+                        });
+                    }
+                    return parseFloat(Math.min(cotacao, this.cotacaoMaxima || 999999));
+                },
+                getCotacaoMinima() {
+                    var cotacaoMinima = this.cotacaoMinima || 1;
+                    var valorAposta = parseFloat(this.valorAposta) || 0;
+                    if (Array.isArray(this.condicaoCotacao)) {
+                        this.condicaoCotacao.forEach((value, index) => {
+                            if (value && (value.min > 0 || value.max > 0) && value.cotacao > 0) {
+                                if (value.min <= valorAposta && value.max >= valorAposta) {
+                                    cotacaoMinima = value.cotacao;
+                                }
+                            }
+                        });
+                    }
+                    return cotacaoMinima;
+                },
+                getPremio() {
+                    var valorAposta = this.valorAposta;
+                    var cotacao = this.getCotacao();
+                    if (cotacao > 1) {
+                        return Math.min(valorAposta * cotacao, this.retornoMaximo);
+                    } else {
+                        return 0;
+                    }
+                },
+                getCotacoesPrincipais() {
+                    var cotacoes = [];
+                    if (this.cotacoes) {
+                        this.cotacoes.forEach((c) => {
+                            if (c.principal == '1')
+                                cotacoes.push(c);
+                        });
+                    }
+                    return cotacoes;
+                },
+                totalCotacoes(cotacoes) {
+                    var total = 0;
+                    if (cotacoes && typeof cotacoes === 'object') {
+                        Object.values(cotacoes).forEach((c) => {
+                            if (c && typeof c === 'object') {
+                                Object.values(c).forEach((v) => {
+                                    if (parseFloat(v) > 1)
+                                        total++;
+                                });
+                            }
+                        });
+                    }
+                    return total;
+                },
+                getCotacoesByGrupo(grupo, tempo) {
+                    tempo = tempo || (this.mJogo ? this.mJogo.tempo : 90);
+                    var grupoId = (typeof grupo === 'object' && grupo !== null) ? (grupo.id || grupo) : grupo;
+                    var list = [];
+                    if (this.cotacoes && this.mJogo && this.mJogo.jogo && this.mJogo.jogo.cotacoes && this.mJogo.jogo.cotacoes[tempo]) {
+                        var odds = this.mJogo.jogo.cotacoes[tempo];
+                        this.cotacoes.forEach((c) => {
+                            if (c.grupo == grupoId && odds[c.campo] && parseFloat(odds[c.campo]) > 1) {
+                                list.push(c);
+                            }
+                        });
+                    }
+                    return list;
+                },
+                getPaises() {
+                    var paises = [];
+                    this.paises.forEach((pais) => {
+                        if (this.filterPais(pais)) {
+                            paises.push(pais);
+                        }
+                    });
+                    return paises;
+                },
+                getCampeonatos(pais, enableFilter) {
+                    var campeonatos = [];
+                    if (pais) {
+                        pais.campeonatos.forEach((c) => {
+                            if (enableFilter === false || this.filterCampeonato(c)) {
+                                campeonatos.push(c);
+                            }
+                        });
+                    } else {
+                        (enableFilter === false ? this.paises : this.getPaises()).forEach((p) => {
+                            p.campeonatos.forEach((c) => {
+                                if (enableFilter === false || this.filterCampeonato(c)) {
+                                    campeonatos.push(c);
+                                }
+                            });
+                        });
+                    }
+                    return campeonatos;
+                },
+                getJogos(campeonato) {
+                    var jogos = [];
+                    campeonato.jogos.forEach((jogo) => {
+                        if (this.filterJogo(jogo)) {
+                            jogos.push(jogo);
+                        }
+                    });
+                    return jogos;
+                },
+                checkFiltros() {
+                    if (!this.findData) {
+                        if (this.findPais == '*' && this.findCampeonato == '*') {
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+                filterPais(pais) {
+                    if (this.findPais == '*' || this.findPais == pais.id) {
+                        if (this.getCampeonatos(pais, true).length > 0) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                filterCampeonato(campeonato) {
+                    if (this.findCampeonato == '*' || this.findCampeonato == campeonato.id) {
+                        if (this.getJogos(campeonato).length) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                jogoAberto(jogo) {
+                    if (!jogo) return false;
+                    var margemMinutos = (parseInt(6) || 0) + 5;
+                    var dtLimite = new Date(this.agora + (margemMinutos * 60 * 1000));
+
+                    var dtJogo = null;
+                    if (jogo.dateTime) {
+                        dtJogo = new Date(jogo.dateTime);
+                    } else if (jogo.data && jogo.hora) {
+                        var partesData = jogo.data.split('-');
+                        var partesHora = jogo.hora.split(':');
+                        dtJogo = new Date(partesData[0], partesData[1] - 1, partesData[2], partesHora[0], partesHora[1], partesHora[2] || 0);
+                    }
+
+                    if (!dtJogo || isNaN(dtJogo.getTime())) {
+                        return false;
+                    }
+
+                    return dtJogo.getTime() > dtLimite.getTime();
+                },
+                filterJogo(jogo) {
+                    if (!this.jogoAberto(jogo)) {
+                        return false;
+                    }
+                    if (this.findData && jogo.data != this.findData) {
+                        return false;
+                    }
+                    if (this.search) {
+                        var exp = new RegExp(this.search, 'i');
+                        if (jogo.casa.search(exp) === -1 && jogo.fora.search(exp) === -1) {
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+                setPais(pais) {
+                    if (pais) {
+                        this.findPais = pais.id;
+                        this.findCampeonato = '*';
+                    } else {
+                        this.findPais = '*';
+                    }
+                    this.findData = null;
+                },
+                setCampeonato(campeonato) {
+                    $('html').removeClass('show-menu show-filtros');
+                    if (campeonato) {
+                        this.findCampeonato = campeonato.id;
+                        if (this.findPais != '*' && this.findPais != campeonato.pais) {
+                            this.findPais = '*';
+                        }
+                    } else {
+                        this.findCampeonato = '*';
+                    }
+                    this.findData = null;
+                },
+                setData(data) {
+                    $('html').removeClass('show-menu show-filtros');
+                    this.findCampeonato = '*';
+                    this.findPais = '*';
+                    this.findData = data;
+                },
+                maisCotacoes(jogo) {
+                    this.mJogo.jogo = jogo;
+                    this.mJogo.tempo = 90;
+                    $('#modal-cotacoes').modal("show");
+                },
+                apostar(jogo, tempo, cotacao) {
+                    if (!jogo || !cotacao || !cotacao.campo) return;
+                    if (!this.jogoAberto(jogo)) {
+                        swal('Aviso!', 'Este jogo não está mais recebendo apostas.', 'warning');
+                        return;
+                    }
+                    if (!jogo.cotacoes || !jogo.cotacoes[tempo] || !(parseFloat(jogo.cotacoes[tempo][cotacao.campo]) > 1)) {
+                        return;
+                    }
+                    let apostaEm = tempo + cotacao.campo;
+                    if (jogo.apostaEm) {
+                        // Removendo jogo da aposta
+                        for (var index = this.aposta.jogos.length - 1; index >= 0; index--) {
+                            if (this.aposta.jogos[index].jogo.id == jogo.id) {
+                                this.aposta.jogos.splice(index, 1);
+                            }
+                        }
+
+                        if (jogo.apostaEm === apostaEm) {
+                            jogo.apostaEm = null;
+                        } else {
+                            jogo.apostaEm = null;
+                            if (this.jogoAberto(jogo))
+                                this.apostar(jogo, tempo, cotacao);
+                        }
+                    } else {
+                        if (this.cotacaoMaxima > 0 && this.getCotacao() == this.cotacaoMaxima) {
+                            swal('Aviso!', 'Sua aposta já atingiu a cotação máxima.', 'warning');
+                        } else {
+                            for (var i = this.aposta.jogos.length - 1; i >= 0; i--) {
+                                var v = this.aposta.jogos[i];
+                                if (v.jogo.id == jogo.id || !this.jogoAberto(v.jogo)) {
+                                    if (v.jogo.id != jogo.id) {
+                                        v.jogo.apostaEm = null;
+                                        v.jogo.outras = false;
+                                    }
+                                    this.aposta.jogos.splice(i, 1);
+                                }
+                            }
+
+                            jogo.apostaEm = apostaEm;
+
+                            if (cotacao.principal == '1' && tempo == '90') {
+                                jogo.outras = false;
+                            } else {
+                                jogo.outras = true;
+                            }
+
+                            this.aposta.jogos.push({
+                                jogo: jogo,
+                                tempo: tempo,
+                                cotacao: cotacao,
+                            });
+
+                            $('#modal-cotacoes').modal("hide");
+                        }
+                    }
+                },
+                rmAposta(index) {
+                    var aposta = this.aposta.jogos[index];
+                    if (aposta) {
+                        aposta.jogo.apostaEm = null;
+                        aposta.jogo.outras = false;
+                        this.aposta.jogos.splice(index, 1);
+                    }
+                },
+                limpaAposta() {
+                    this.aposta.jogos.forEach((j) => {
+                        j.jogo.apostaEm = null;
+                        j.jogo.outras = false;
+                    });
+                    this.aposta.jogos = [];
+                    $(".bilhete").removeClass('show');
+                },
+                imprimir(campeonato) {
+                    if (campeonato) {
+                        window.open(url('apostar/imprimirTabela') + '?campeonato=' + campeonato, '_blank');
+                    } else {
+                        window.open(url('apostar/imprimirTabela') + '?campeonato=' + (this.findCampeonato || null) + '&data=' + (this.findData || '') + '&search=' + (this.search || ''), '_blank');
+                    }
+                },
+                finalizarAposta() {
+                    var aposta = {
+                        valor: this.valorAposta,
+                        cliente: this.cliente,
+                        telefone: this.telefone,
+                        revendedor: this.revendedor,
+                        jogos: [],
+                    };
+
+                    this.aposta.jogos.forEach((v, index) => {
+                        aposta.jogos.push({
+                            jogo: v.jogo.id,
+                            tempo: v.tempo,
+                            cotacao: v.cotacao.campo,
+                        });
+                    });
+
+                    $('html').addClass('loading').removeClass('show-bilhete');
+
+                    axios
+                        .post(url('apostar/apostar'), aposta)
+                        .then((response) => {
+                            var e = response.data;
+                            if (e.result == 1) {
+                                this.limpaAposta();
+                                this.valorAposta = this.apostaMinima;
+                                window.localStorage.removeItem('apostaJogos');
+
+                                if (e.codigo) {
+                                    swal({
+                                        title: $.trim(e.codigo.replace(/(.{3})/g, '$1 ')),
+                                        text: 'Bilhete gerado com sucesso!\nProcure um dos nossos cambistas para validar o seu bilhete.',
+                                        icon: 'success',
+                                        button: {
+                                            text: 'Compartilhar whatsapp',
+                                            closeModal: true,
+                                            value: {link: e.link, share: e.share},
+                                        }
+                                    }).then((e) => {
+                                        if (e && e.share) {
+                                            window.open(e.share, '_blank');
+                                        }
+                                    });
+                                } else {
+                                    swal('Sucesso', 'Aposta realizada com sucesso!', 'success');
+                                }
+                            } else {
+                                // Atualiza relógio e remove apenas jogos encerrados do cupom
+                                this.agora = Date.now();
+                                for (var k = this.aposta.jogos.length - 1; k >= 0; k--) {
+                                    var item = this.aposta.jogos[k];
+                                    if (item && item.jogo && !this.jogoAberto(item.jogo)) {
+                                        item.jogo.apostaEm = null;
+                                        item.jogo.outras = false;
+                                        this.aposta.jogos.splice(k, 1);
+                                    }
+                                }
+                                swal('Aviso!', e.message, 'warning');
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            $('html').removeClass('loading');
+                        });
+                }
+            }
+        });
+
+    </script>
+
+    <script>
+        if (typeof app !== 'undefined') {
+            app.$watch('aposta.jogos.length', function(newVal) {
+                var badge = document.getElementById('leonMobileBadge');
+                if (badge) {
+                    badge.innerText = newVal;
+                    badge.style.display = newVal > 0 ? 'flex' : 'none';
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
